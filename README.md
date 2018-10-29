@@ -17,18 +17,23 @@ This application is inspired by mobile apps such as Dark Sky and Weathertron, an
 
 ## Technologies
 `Vanilla JS` for logic
+
 `Node.js` server API's for monitoring and analytics
+
 `Chart.js` charts for temp curve line and bar graphs
+
 `Dark Sky` weather `API` for JSON data
+
 `Pusher` to build scalable, real time features
+
 `HTML5` an `CSS3` (flexbox for responsiveness)
 
 ## MVP's 
 
-[checkbox:unchecked] Adequate and Responsive Styling
-[checkbox:unchecked] Graphing that updates in real time
-[checkbox:unchecked] Data visualization updates with user interaction
-[checkbox:unchecked] Smooth, bug-free user experience
+- [ ] Adequate and Responsive Styling
+- [ ] Graphing that updates in real time
+- [ ] Data visualization updates with user interaction
+- [ ] Smooth, bug-free user experience
 
 ## Implementation Timeline
 
