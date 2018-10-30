@@ -3,30 +3,70 @@ body {
   padding: 0;
   overflow: hidden;
   font-family: Raleway;
-  background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
-  background-size: 400% 400%;
-  -webkit-animation: Gradient 15s ease infinite;
-  -moz-animation: Gradient 15s ease infinite;
-  animation: Gradient 15s ease infinite;
+  background-color: snow;
+}
+
+.precip {
+  position: absolute;
+  top: 0;
+  height: 47%;
+  width: 100%;
+    background: linear-gradient(-45deg, #60c2d5, #23a6d5, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
 }
 
 #bar-chart {
   position: absolute;
   top: 0;
   margin: 0px auto;
-  height: 40% !important;
+  margin-top: 20px;
+  height: 90% !important;
   width: 100% !important;
+  /* z-index: -1; */
 }
 
+ .date-btns {
+  position: absolute;
+  height: 60px;
+  width: 100%;
+  background-color: #fff;
+  top: 45%;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+   0 1px 2px rgba(0, 0, 0, 0.24);
+} 
 
+.date-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  background-color: #fff;
+  color: lightgray;
+  font-size: 45px;
+  padding-right: 5%;
+  padding-left: 5%;
+} 
+
+.temperature {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: snow;
+  height: 46%;
+}
 
 #weatherChart {
   position: absolute;
   bottom: 0;
-  height: 60% !important;
+  margin-top: 20px;
+  height: 90% !important;
   width: 100% !important;
   margin: 0 auto;
-  background-color: transparent;
+  background-color: snow;
 }
 
 @-webkit-keyframes Gradient {
