@@ -18,8 +18,8 @@ This application is inspired by mobile apps such as Dark Sky and Weathertron, an
 * Forecast, and current temperature will update in real-time without the need for browser refresh
 
 ## Wireframes
-![Screenshot](screenshot.png)
-![Screenshot](screenshot.png)
+![](new_day2.png)
+![](new_day.png)
 
 ## Technologies
 `Vanilla JS` for logic
