@@ -19,18 +19,6 @@
         document.getElementById(elementId).style.display = 'none';
     }
 
-    const ajax = (url, method, payload, successCallback) => {
-        let xhr = new XMLHttpRequest();
-        xhr.open(method, url, true);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState != 4 || xhr.status != 200) return;
-            successCallback(xhr.responseText);
-        };
-        xhr.send(JSON.stringify(payload));
-    }
-
-
     const renderWeatherChart = (weatherData) => {
         const ctx = document.getElementById("weatherChart").getContext("2d");
         let options = {};
@@ -60,7 +48,33 @@
         });
     }
 
-    const chartConfig = {
+    const renderPrecipChart = (weatherData) => {
+        const ctx = document.getElementById("bar-chart");
+        let options = {};
+        precipChartRef = new Chart(ctx, {
+            type: "bar",
+            data: weatherData,
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                }
+            }
+        });
+    }
+
+    const precipConfig = {
+        labels: "",
+        datasets: [{
+            label: "",
+            backgroundColor: "rgba(211, 211, 211, 0.7)",
+            data: []
+        }]
+    }
+
+    const tempConfig = {
         labels: "",
         datasets: [{
             label: "",
@@ -85,40 +99,35 @@
             spanGaps: false,
         }]
     };
+   
+    axios.get('/getWeather').then((response => onFetchWeatherResponse(response)));
 
-    ajax("/getTemperature", "GET", {}, onFetchTempSuccess);
-
-    function onFetchTempSuccess(response) {
+    function onFetchWeatherResponse(response) {
         hideEle("loader");
-        let respData = JSON.parse(response);
-        chartConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
-        chartConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temperature);
-        renderWeatherChart(chartConfig)
+        let respData = response.data;
+        tempConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
+        tempConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temperature);
+        precipConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
+        precipConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.precip);
+        renderWeatherChart(tempConfig);
+        renderPrecipChart(precipConfig);
     }
 
-    channel = pusher.subscribe('local-temp-chart');
-    channel.bind('new-temperature', function (data) {
-        let newTempData = data.dataPoint;
+    channel = pusher.subscribe('local-weather-chart');
+    channel.bind('new-weather', function (data) {
+        let newWeatherData = data.dataPoint;
         if (weatherChartRef.data.labels.length > 15) {
             weatherChartRef.data.labels.shift();
+            precipChartRef.data.labels.shift();
             weatherChartRef.data.datasets[0].data.shift();
+            precipChartRef.data.datasets[0].data.shift();
         }
-        weatherChartRef.data.labels.push(newTempData.time);
-        weatherChartRef.data.datasets[0].data.push(newTempData.temperature);
+        weatherChartRef.data.labels.push(newWeatherData.time);
+        precipChartRef.data.labels.push(newWeatherData.time);
+        weatherChartRef.data.datasets[0].data.push(newWeatherData.temperature);
+        precipChartRef.data.datasets[0].data.push(newWeatherData.precip);
+
         weatherChartRef.update();
+        precipChartRef.update();
     });
-
-
-    /* TEMP CODE FOR TESTING */
-    let dummyTime = 1500;
-    setInterval(() => {
-        dummyTime = dummyTime + 10;
-        ajax(`/addTemperature?temperature=${getRandomInt(10, 120)}&time=${dummyTime}`, "GET", {}, () => {});
-    }, 6000);
-
-    const getRandomInt = (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-    /* TEMP CODE ENDS */
-
 }

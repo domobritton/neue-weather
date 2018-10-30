@@ -10,15 +10,18 @@ body {
   animation: Gradient 15s ease infinite;
 }
 
-.subheader {
-  display: flex;
-  align-items: center;
-  margin: 0px;
-  height: 40%;
+#bar-chart {
+  position: absolute;
+  top: 0;
+  margin: 0px auto;
+  height: 40% !important;
+  width: 100% !important;
 }
 
+
+
 #weatherChart {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   height: 60% !important;
   width: 100% !important;

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-
+const axios = require("axios");
 const Pusher = require('pusher');
 
 const pusher = new Pusher({
@@ -20,69 +20,80 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const localTempData = {
+const localWeatherData = {
     city: 'San Francisco',
     unit: 'fahrenheit',
     dataPoints: [{
             time: 1130,
-            temperature: 57
+            temperature: 57,
+            precip: 10
         },
         {
             time: 1200,
-            temperature: 58
+            temperature: 58,
+            precip: 5
         },
         {
             time: 1230,
-            temperature: 64
+            temperature: 64,
+            precip: 20
         },
         {
             time: 1300,
-            temperature: 68
+            temperature: 68,
+            precip: 40
         },
         {
             time: 1330,
-            temperature: 69
+            temperature: 69,
+            precip: 30
         },
         {
             time: 1400,
-            temperature: 72
+            temperature: 72,
+            precip: 5
         },
     ]
 }
 
-app.get('/getTemperature', (req, res) => {
-    res.send(localTempData);
-});
+const url =
+    "https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/37.8267,-122.4233";
+const getWeather = async url => {
+    try {
+        const response = await axios.get(url);
+        const data = response.data;
+        updateWeather(data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+getWeather(url);
 
-app.get('/addTemperature', (req, res) => {
-    let temp = parseInt(req.query.temperature);
-    let time = parseInt(req.query.time);
-    if (temp && time && !isNaN(temp) && !isNaN(time)) {
+const updateWeather = (data) => {
+    const time = data.currently.time;
+    const temp = data.currently.temperature;
+    const precip = data.currently.precipIntensity;
+
+    if (!isNaN(time) && !isNaN(temp) && !isNaN(precip)) {
         let newDataPoint = {
+            time: time,
             temperature: temp,
-            time: time
+            precip: precip
         };
-        localTempData.dataPoints.push(newDataPoint);
-        pusher.trigger('local-temp-chart', 'new-temperature', {
+        localWeatherData.dataPoints.push(newDataPoint);
+        pusher.trigger('local-weather-chart', 'new-weather', {
             dataPoint: newDataPoint
         });
-        res.send({
-            success: true
-        });
     } else {
-        res.send({
-            success: false,
-            errorMessage: 'Invalid Params, required - temperature & time.'
-        });
+        console.log("not found");
     }
+ 
+}
+
+app.get('/getWeather', (req, res) => {
+    res.send(localWeatherData);
 });
 
-// Error Handler for 404 Pages
-app.use((req, res, next) => {
-    var error404 = new Error('Route Not Found');
-    error404.status = 404;
-    next(error404);
-});
 
 module.exports = app;
 
