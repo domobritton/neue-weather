@@ -1,4 +1,5 @@
 {
+    
     // For pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -110,7 +111,6 @@
         hideEle("loader");
         let respData = response.data;
         tempConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
-        console.log(tempConfig.labels);
         tempConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temperature);
         precipConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
         precipConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.precip);
@@ -135,4 +135,5 @@
         weatherChartRef.update();
         precipChartRef.update();
     });
+    
 }

@@ -7,14 +7,30 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:200">
     <link rel="stylesheet" href="./stylesheets/style.css">
-    <link rel="stylesheet/less" type="text/css" href="styles.less" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body onload="digi()">
     <header>
+        <figure class="icons">
+            <canvas id="clear-day" width="64" height="64"></canvas>
+            <canvas id="clear-night" width="64" height="64"></canvas>
+            <canvas id="partly-cloudy-day" width="64" height="64"></canvas>
+            <canvas id="partly-cloudy-night" width="64" height="64"></canvas>
+            <canvas id="cloudy" width="64" height="64"></canvas>
+            <canvas id="rain" width="64" height="64"></canvas>
+            <canvas id="sleet" width="64" height="64"></canvas>
+            <canvas id="snow" width="64" height="64"></canvas>
+            <canvas id="wind" width="64" height="64"></canvas>
+            <canvas id="fog" width="64" height="64"></canvas>
+        </figure>
+        <div id="time"></div>
     </header>
     <section class="precip">
+        <div class="toggle">
+            <div class="inner-toggle"></div>
+            <div class="toggle-text">NIGHT MODE</div>
+        </div>
         <canvas id="bar-chart">   
         </canvas>
         <div class="precip-title">PRECIPITATION</div>
@@ -33,11 +49,13 @@
         <canvas id="weatherChart">
         </canvas>
     </section>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
     <script type="text/javascript" src="./app.js"></script>
+    <script type="text/javascript" src="./clock.js"></script>
+    <!-- <script type="text/javascript" src="./icons.js"></script> -->
 </body>
 
 </html>
