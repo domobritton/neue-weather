@@ -17,6 +17,10 @@ This application is inspired by mobile apps such as Dark Sky and Weathertron, an
 * Background colors will also shift from blues/light to dark theme as the user navigates from day to night forecasts
 * Forecast, and current temperature will update in real-time without the need for browser refresh
 
+## Wireframes
+![](new_day2.png)
+![](new_day.png)
+
 ## Technologies
 `Vanilla JS` for logic
 
