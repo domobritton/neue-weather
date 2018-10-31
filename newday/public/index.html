@@ -7,6 +7,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:200">
     <link rel="stylesheet" href="./stylesheets/style.css">
+    <link rel="stylesheet/less" type="text/css" href="styles.less" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
@@ -16,6 +17,7 @@
     <section class="precip">
         <canvas id="bar-chart">   
         </canvas>
+        <div class="precip-title">PRECIPITATION</div>
     </section>
     <section class="date-btns">
         <div class="date-inner">
@@ -24,12 +26,14 @@
         </div>
     </section>
     <section class="temperature">
+        <div class="temp-title">TEMPERATURE</div>
         <div id="loader" class="loader">
             Loading...
         </div>
         <canvas id="weatherChart">
         </canvas>
     </section>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

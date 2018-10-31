@@ -2,18 +2,11 @@
     // For pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    let serverUrl = "/",
-        members = [],
-        pusher = new Pusher('35eceb7b79993dd7be7e', {
+    let pusher = new Pusher('35eceb7b79993dd7be7e', {
             cluster: 'us2',
-            // authEndpoint: '/usersystem/auth',
             encrypted: true
         }),
         channel, weatherChartRef;
-
-    // const showEle = (elementId) => {
-    //     document.getElementById(elementId).style.display = 'flex';
-    // }
 
     const hideEle = (elementId) => {
         document.getElementById(elementId).style.display = 'none';
@@ -34,7 +27,10 @@
                 },
                 scales: {
                     xAxes: [{
-                        display: false //this will remove all the x-axis grid lines
+                        display: true, //this will remove all the x-axis grid lines
+                        gridLines: {
+                            color: "rgba(211, 211, 211, 0)"
+                        }
                     }],
                     yAxes: [{
                         gridLines: {
@@ -114,6 +110,7 @@
         hideEle("loader");
         let respData = response.data;
         tempConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
+        console.log(tempConfig.labels);
         tempConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temperature);
         precipConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
         precipConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.precip);

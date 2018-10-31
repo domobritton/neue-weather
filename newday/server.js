@@ -23,41 +23,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 const localWeatherData = {
     city: 'San Francisco',
     unit: 'fahrenheit',
-    dataPoints: [{
-            time: 1130,
-            temperature: 57,
-            precip: 10
-        },
-        {
-            time: 1200,
-            temperature: 58,
-            precip: 5
-        },
-        {
-            time: 1230,
-            temperature: 64,
-            precip: 20
-        },
-        {
-            time: 1300,
-            temperature: 68,
-            precip: 40
-        },
-        {
-            time: 1330,
-            temperature: 69,
-            precip: 30
-        },
-        {
-            time: 1400,
-            temperature: 72,
-            precip: 5
-        },
-    ]
+    dataPoints: []
 }
 
 const url =
-    "https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/37.8267,-122.4233";
+    "https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/37.8267,-122.4233?exclude=minutes";
 const getWeather = async url => {
     try {
         const response = await axios.get(url);
@@ -67,14 +37,35 @@ const getWeather = async url => {
         console.log(error);
     }
 };
-getWeather(url);
+
+const timeConverter = (UNIX_timestamp) => {
+    let unix, hourC, minuteC, hours, minutes;
+    unix = new Date(UNIX_timestamp * 1000);
+    hourC = unix.getHours() % 12;
+    minuteC = unix.getMinutes();
+    hours = hourC < 10 ? `0${hourC}` : hourC;
+    minutes = minuteC < 10 ? `0${minuteC}` : minuteC;
+    return `${hours}:${minutes}`;
+}
 
 const updateWeather = (data) => {
-    const time = data.currently.time;
-    const temp = data.currently.temperature;
-    const precip = data.currently.precipIntensity;
+    let time, temp, precip, hourlyTime, hourlyTemp, hourlyPrecip;
+    time = timeConverter(data.currently.time);
+    temp = data.currently.temperature;
+    precip = data.currently.precipIntensity;
+    hourlyTime = data.hourly.data.map(time => timeConverter(time.time));
+    hourlyTemp = data.hourly.data.map(temps => temps.temperature);
+    hourlyPrecip = data.hourly.data.map(prec => prec.precipIntensity);
+    for (let i = 0; i < 11; i++) {
+        let newDataPoint = {
+            time: hourlyTime[i],
+            temperature: hourlyTemp[i],
+            precip: hourlyPrecip[i]
+        }
+        localWeatherData.dataPoints.push(newDataPoint);
+    }
 
-    if (!isNaN(time) && !isNaN(temp) && !isNaN(precip)) {
+    if (isNaN(time) && !isNaN(temp) && !isNaN(precip)) {
         let newDataPoint = {
             time: time,
             temperature: temp,
@@ -87,13 +78,13 @@ const updateWeather = (data) => {
     } else {
         console.log("not found");
     }
- 
+    console.log(localWeatherData);
 }
 
 app.get('/getWeather', (req, res) => {
     res.send(localWeatherData);
 });
-
+getWeather(url);
 
 module.exports = app;
 

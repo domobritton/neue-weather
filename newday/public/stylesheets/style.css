@@ -18,6 +18,21 @@ body {
     animation: Gradient 15s ease infinite;
 }
 
+.precip-title {
+  position: absolute;
+  bottom: 20px;
+  left: 25px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.temp-title {
+  position: absolute;
+  top: 10px;
+  left: 25px;
+  color: lightgray;
+  font-size: 18px;
+}
 #bar-chart {
   position: absolute;
   top: 0;
@@ -110,3 +125,25 @@ body {
     background-position: 0% 50%
   }
 }
+
+@-webkit-keyframes twinkle {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.2;
+  }
+}
+
+
+@keyframes twinkle {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.2;
+  }
+}
+
