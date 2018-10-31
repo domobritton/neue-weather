@@ -40,6 +40,8 @@
         }
     };
 
+    setTimeout(() => getWeather(), 10000);
+
     const timeConverter = (UNIX_timestamp) => {
         let unix, hourC, minuteC, hours, minutes;
         unix = new Date(UNIX_timestamp * 1000);
@@ -52,9 +54,11 @@
     }
 
     const updateWeather = (data) => {
-        let time, temp, precip, hourlyTime, hourlyTemp, hourlyPrecip;
+        let time, temp, precip, hourlyTime, hourlyTemp, hourlyPrecip, icon, clouds;
         time = timeConverter(data.currently.time);
         temp = data.currently.temperature;
+        icon = data.currently.icon;
+        clouds = data.currently.cloudCover;
         precip = data.currently.precipIntensity;
         hourlyTime = data.hourly.data.map(time => timeConverter(time.time));
         hourlyTemp = data.hourly.data.map(temps => temps.temperature);
@@ -62,7 +66,7 @@
         for (let i = 0; i < 23; i++) {
             let newDataPoint = {
                 time: hourlyTime[i],
-                temperature: hourlyTemp[i],
+                temp: hourlyTemp[i],
                 precip: hourlyPrecip[i]
             }
             localWeatherData.dataPoints.push(newDataPoint);
@@ -70,9 +74,11 @@
 
         if (isNaN(time) && !isNaN(temp) && !isNaN(precip)) {
             let newDataPoint = {
-                time: time,
-                temperature: temp,
-                precip: precip
+                time,
+                temp,
+                precip,
+                icon,
+                clouds
             };
             localWeatherData.dataPoints.push(newDataPoint);
             pusher.trigger('local-weather-chart', 'new-weather', {
@@ -81,7 +87,10 @@
         } else {
             console.log("not found");
         }
-        console.log(localWeatherData);
+     
+        if (localWeatherData.dataPoints.length > 24) {
+            localWeatherData.dataPoints.shift();
+        }
     }
 
     app.get('/getWeather', (req, res) => {

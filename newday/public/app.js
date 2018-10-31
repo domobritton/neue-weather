@@ -1,5 +1,5 @@
 {
-    
+
     // For pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
@@ -84,10 +84,10 @@
         datasets: [{
             label: "",
             fill: false,
-            lineTension: 0,
             backgroundColor: "rgba(52,152,219,1)",
             borderColor: "rgba(211, 211, 211, 1)",
             borderCapStyle: 'butt',
+            borderWidth: 5,
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
@@ -105,13 +105,82 @@
         }]
     };
 
+    const renderIcon = (resp) => {
+        const icons = resp.dataPoints.map(dataPoint => dataPoint.icon);
+        const icon = icons[icons.length - 1];
+        const skycon = new Skycons({
+            "color": "rgba(255,255,255,1)"
+        });
+
+        switch (icon) {
+            case "clear-night":
+                skycon.set("icon", Skycons.CLEAR_NIGHT);
+                break;
+            case "clear-day":
+                skycon.set("icon", Skycons.CLEAR_DAY);
+                break;
+            case "partly-cloudy-day":
+                skycon.set("icon", Skycons.PARTLY_CLOUDY_DAY);
+                break;
+            case "partly-cloudy-night":
+                skycon.set("icon", Skycons.PARTLY_CLOUDY_NIGHT);
+                break;
+            case "cloudy":
+                skycon.set("icon", Skycons.CLOUDY);
+                break;
+            case "rain":
+                skycon.set("icon", Skycons.RAIN);
+                break;
+            case "sleet":
+                skycon.set("icon", Skycons.SLEET);
+                break;
+            case "snow":
+                skycon.set("icon", Skycons.SNOW);
+                break;
+            case "wind":
+                skycon.set("icon", Skycons.WIND);
+                break;
+            case "fog":
+                skycon.set("icon", Skycons.FOG);
+                break;
+            default:
+                skycon.set("icon", Skycons.CLEAR_DAY);
+        }
+        skycon.play();
+    }
+
+    const renderHeaderData = (resp) => {
+        const temp = resp.dataPoints.map(dataPoint => dataPoint.temp);
+        const clouds = resp.dataPoints.map(dataPoint => dataPoint.clouds);
+        const currTemp = temp[temp.length - 1];
+        const currCloud = clouds[clouds.length - 1];
+        document.getElementById("temp").innerHTML = `${Math.round(currTemp)} F°`;
+        document.getElementById("clouds").innerHTML = `Cloud cover is at ${currCloud * 100} %`;
+    }
+
+
+    
+    const slideHeader = () => {
+        document.getElementById("header").classList.add("open");
+        setTimeout(() => document.getElementById("header").classList.remove("open"), 4000);
+    }
+
+    document.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        if (e.keyCode === 40) {
+           slideHeader(); 
+        }
+    });
+
     axios.get('/getWeather').then((response => onFetchWeatherResponse(response)));
 
     function onFetchWeatherResponse(response) {
         hideEle("loader");
         let respData = response.data;
+        renderIcon(respData);
+        renderHeaderData(respData);
         tempConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
-        tempConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temperature);
+        tempConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temp);
         precipConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
         precipConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.precip);
         renderWeatherChart(tempConfig);
@@ -129,11 +198,11 @@
         }
         weatherChartRef.data.labels.push(newWeatherData.time);
         precipChartRef.data.labels.push(newWeatherData.time);
-        weatherChartRef.data.datasets[0].data.push(newWeatherData.temperature);
+        weatherChartRef.data.datasets[0].data.push(newWeatherData.temp);
         precipChartRef.data.datasets[0].data.push(newWeatherData.precip);
 
         weatherChartRef.update();
         precipChartRef.update();
     });
-    
+
 }

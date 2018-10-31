@@ -6,39 +6,79 @@
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:200">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="./stylesheets/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body onload="digi()">
-    <header>
-        <figure class="icons">
-            <canvas id="clear-day" width="64" height="64"></canvas>
-            <canvas id="clear-night" width="64" height="64"></canvas>
-            <canvas id="partly-cloudy-day" width="64" height="64"></canvas>
-            <canvas id="partly-cloudy-night" width="64" height="64"></canvas>
-            <canvas id="cloudy" width="64" height="64"></canvas>
-            <canvas id="rain" width="64" height="64"></canvas>
-            <canvas id="sleet" width="64" height="64"></canvas>
-            <canvas id="snow" width="64" height="64"></canvas>
-            <canvas id="wind" width="64" height="64"></canvas>
-            <canvas id="fog" width="64" height="64"></canvas>
-        </figure>
-        <div id="time"></div>
+    <header id="header">
+        <div class="widget center">
+            <div class="blur"></div>
+            <div class="text center">
+                <div class="inner-header-box">
+                    <div class="left-header">
+                        <canvas id="icon" width="100" height="100"></canvas>
+                        <div id="temp"></div>
+                        <div id="clouds"></div>
+                    </div>
+                    <div id="time"></div>
+                </div>
+            </div>
+        </div>
     </header>
+    <aside id="aside-left">
+        <div class="left-aside">
+            <div class="blur-aside"></div>
+            <div class="inner-aside">
+                <div class="inner-text">
+                    <h1>FAQ</h1>
+                    <p>Lorem ipsum dolor amet art party palo santo iceland heirloom celiac. Green juice kickstarter
+                        vice plaid cold-pressed
+                        craft beer viral lomo heirloom fingerstache etsy.</p>
+                    <p>Disrupt man bun cold-pressed, echo park woke fam mustache roof party 3 wolf moon. Four loko
+                        tumeric la croix venmo,
+                        single-origin coffee lo-fi meh street art VHS. Forage tumeric pork belly meggings.</p>
+                </div>
+            </div>
+        </div>
+        <div class="left-aside-bottom">
+            <div class="toggle-left">
+                <h4>°F TEMP</h4>
+                <label class="switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <div class="toggle-left">
+                <h4>12 HOUR</h4>
+                <label class="switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <div class="social">
+                <i class="fab fa-github fa-2x"></i>
+                <i class="fab fa-linkedin fa-2x"></i>
+            </div>
+        </div>
+    </aside>
     <section class="precip">
         <div class="toggle">
-            <div class="inner-toggle"></div>
-            <div class="toggle-text">NIGHT MODE</div>
+            <label class="switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+            </label>
         </div>
-        <canvas id="bar-chart">   
+        <canvas id="bar-chart">
         </canvas>
         <div class="precip-title">PRECIPITATION</div>
     </section>
     <section class="date-btns">
         <div class="date-inner">
-        <div class="today">TODAY</div>
-        <div class="tomorrow">TOMORROW</div>
+            <div class="today">TODAY</div>
+            <div class="tomorrow">TOMORROW</div>
         </div>
     </section>
     <section class="temperature">
