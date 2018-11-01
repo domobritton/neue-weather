@@ -306,51 +306,123 @@ input:checked+.slider:before {
   left: 0;
   right: 0;
 }
-
+/* aside left */
 #aside-left {
     position: absolute;
     width: 25%;
     height: 100vh;
     top: 0;
-    left: 0;
-    padding: 1%;
-    /* background-color: transparent; */
-    background-color: #fff;
+    left: -350px;
+    background-color: transparent;
     z-index: 10;
     overflow-x: hidden;
     transition-property: all;
     transition-duration: .5s;
     transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-    display: none;
+}
+
+#aside-left.open {
+    left: 0;
 }
 
 .left-aside {
-   background-color: lightgray;
-   padding: 5px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 3%;
+    background-color: snow;
 }
 
 .inner-text h1 {
   text-align: center;
 }
 
+.left-aside-bottom {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 60px;
+}
+
 .left-aside-bottom h4 {
   font-size: 20px;
   color: lightgray;
-  margin-right: 10px;
 }
 
-.left-aside-bottom {
-  padding-top: 50px;
+p {
+  font-size: 1em;
 }
 
-.toggle-left, .social {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 80px;
+a {
+  text-decoration: none;
+  font-size: 0.8em;
+  color: gray;
 }
+
+.social {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
 .fa-github, .fa-linkedin {
   color: lightgray;
-  margin-right: 20px;
+  padding-right: 5%;
+  cursor: pointer;
+}
+
+.fa-github:hover, .fa-linkedin:hover {
+  color: gray;
+}
+
+/* aside right */
+#aside-right {
+  position: absolute;
+  width: 25%;
+  height: 100vh;
+  top: 0;
+  right: -350px;
+  background-color: transparent;
+  z-index: 10;
+  overflow-x: hidden;
+  transition-property: all;
+  transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+#aside-right.open {
+  right: 0;
+}
+
+.right-aside {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 3%;
+  background-color: snow;
+}
+
+.inner-text h1 {
+  text-align: center;
+}
+
+.right-aside-bottom {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 60px;
+}
+
+.right-aside-bottom h4 {
+  font-size: 20px;
+  color: lightgray;
 }

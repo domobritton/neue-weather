@@ -15,7 +15,6 @@
 
     const renderWeatherChart = (weatherData) => {
         const ctx = document.getElementById("weatherChart").getContext("2d");
-        let options = {};
         weatherChartRef = new Chart(ctx, {
             type: "line",
             data: weatherData,
@@ -28,7 +27,7 @@
                 },
                 scales: {
                     xAxes: [{
-                        display: true, //this will remove all the x-axis grid lines
+                        display: true, //this will remove all the x-axis grid lines if false
                         gridLines: {
                             color: "rgba(211, 211, 211, 0)"
                         }
@@ -58,7 +57,7 @@
                 },
                 scales: {
                     xAxes: [{
-                        display: false //this will remove all the x-axis grid lines
+                        display: false //this will remove all the x-axis grid lines if false
                     }],
                     yAxes: [{
                         gridLines: {
@@ -158,19 +157,72 @@
         document.getElementById("clouds").innerHTML = `Cloud cover is at ${currCloud * 100} %`;
     }
 
-
-    
     const slideHeader = () => {
-        document.getElementById("header").classList.add("open");
-        setTimeout(() => document.getElementById("header").classList.remove("open"), 4000);
+        const header = document.getElementById("header");
+        header.classList.add("open");
+        setTimeout(() => header.classList.remove("open"), 4000);
+    }
+
+    const slideFaq = () => {
+        const aside = document.getElementById("aside-left");
+        aside.classList.add("open");
+        setTimeout(() => aside.classList.remove("open"), 10000);
+    }
+
+    const slideForecast = () => {
+        const aside = document.getElementById("aside-right");
+        aside.classList.add("open");
+        setTimeout(() => aside.classList.remove("open"), 10000);
+    }
+
+    const removeClass = () => {
+        const ids = ["aside-left", "aside-right", "header"];
+        ids.forEach((id) => {
+            document.getElementById(id).classList.remove("open");
+        });
     }
 
     document.addEventListener("keydown", (e) => {
         e.preventDefault();
         if (e.keyCode === 40) {
-           slideHeader(); 
+            slideHeader();
+        }
+        if (e.keyCode === 39) {
+            slideFaq();
+        }
+        if (e.keyCode === 37) {
+            slideForecast();
+        }
+        if (e.keyCode === 32) {
+            removeClass();
         }
     });
+
+    document.getElementById("checkbox1").addEventListener("click", dayOrNight);
+    document.getElementById("checkbox2").addEventListener("click", renderCurrentTemp);
+
+    function dayOrNight() {
+        let toggle = document.getElementById("checkbox1");
+        debugger;
+
+    }
+
+    function renderCurrentTemp() {
+        let toggle = document.getElementById("checkbox2");
+        let fOrC = document.getElementById("temp");
+        let currTemp = fOrC.innerHTML.slice(0, 2);
+        let converted;
+
+        if (toggle.value === "false") {
+            toggle.value = "true";
+            converted = Math.round((currTemp - 32) * 5 / 9);
+            fOrC.innerHTML = `${converted} C°`;
+        } else {
+            toggle.value = "false";
+            converted = Math.round(currTemp * 9 / 5 + 32)
+            fOrC.innerHTML = `${converted} F°`;
+        }
+    }
 
     axios.get('/getWeather').then((response => onFetchWeatherResponse(response)));
 
@@ -188,7 +240,7 @@
     }
 
     channel = pusher.subscribe('local-weather-chart');
-    channel.bind('new-weather', function (data) {
+    channel.bind('new-weather', (data) => {
         let newWeatherData = data.dataPoint;
         if (weatherChartRef.data.labels.length > 15) {
             weatherChartRef.data.labels.shift();

@@ -29,7 +29,7 @@
     }
 
     const url =
-        "https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/37.8267,-122.4233?exclude=minutes";
+        "https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/37.8267,-122.4233?exclude=minutely";
     const getWeather = async url => {
         try {
             const response = await axios.get(url);
@@ -40,14 +40,13 @@
         }
     };
 
-    setTimeout(() => getWeather(), 10000);
+    setTimeout(() => getWeather(url), 10000);
 
     const timeConverter = (UNIX_timestamp) => {
         let unix, hourC, minuteC, hours, minutes;
         unix = new Date(UNIX_timestamp * 1000);
         hourC = unix.getHours() % 12;
         minuteC = unix.getMinutes();
-        // let noonMid = hourC === 0 ? 12 : hourC;
         hours = hourC < 10 ? `0${hourC}` : hourC;
         minutes = minuteC < 10 ? `0${minuteC}` : minuteC;
         return `${hours}:${minutes}`;
