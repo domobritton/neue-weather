@@ -34,7 +34,7 @@
                     }],
                     yAxes: [{
                         gridLines: {
-                            color: "rgba(211, 211, 211, 0.2)"
+                            color: "rgba(211, 211, 211, 0)"
                         }
                     }]
                 }
@@ -61,7 +61,7 @@
                     }],
                     yAxes: [{
                         gridLines: {
-                            color: "rgba(211, 211, 211, 0.2)"
+                            color: "rgba(211, 211, 211, 0.0)"
                         }
                     }]
                 }
@@ -73,7 +73,7 @@
         labels: "",
         datasets: [{
             label: "",
-            backgroundColor: "rgba(211, 211, 211, 0.7)",
+            backgroundColor: "rgba(211, 211, 211, 0.5)",
             data: []
         }]
     }
@@ -83,7 +83,6 @@
         datasets: [{
             label: "",
             fill: false,
-            backgroundColor: "rgba(52,152,219,1)",
             borderColor: "rgba(211, 211, 211, 1)",
             borderCapStyle: 'butt',
             borderWidth: 5,
@@ -154,7 +153,7 @@
         const currTemp = temp[temp.length - 1];
         const currCloud = clouds[clouds.length - 1];
         document.getElementById("temp").innerHTML = `${Math.round(currTemp)} F°`;
-        document.getElementById("clouds").innerHTML = `Cloud cover is at ${currCloud * 100} %`;
+        document.getElementById("clouds").innerHTML = `Cloud cover is at ${Math.round(currCloud * 100)} %`;
     }
 
     const slideHeader = () => {
@@ -202,13 +201,67 @@
     document.getElementById("checkbox2").addEventListener("click", renderCurrentTemp);
 
     function dayOrNight() {
-        let toggle = document.getElementById("checkbox1");
-        debugger;
-
+        const header = document.getElementById("blur");
+        const body = document.getElementById("body");
+        const leftAside = document.getElementById("left-aside");
+        const rightAside = document.getElementById("right-aside");
+        const precip = document.getElementById("precip");
+        const dateBtns = document.getElementById("date-btns");
+        const truthy = body.classList.contains("day");
+        if (truthy) {
+            header.classList.remove("blur");
+            header.classList.add("blur-night");
+            body.classList.remove("day");
+            body.classList.add("night");
+            leftAside.classList.remove("day");
+            leftAside.classList.add("night");
+            rightAside.classList.remove("day");
+            rightAside.classList.add("night");
+            dateBtns.classList.remove("day");
+            dateBtns.classList.add("night");
+            precip.classList.remove("precip-day");
+            precip.classList.add("precip-night");
+            generateStars();
+        } else {
+            header.classList.remove("blur-night");
+            header.classList.add("blur");
+            body.classList.remove("night");
+            body.classList.add("day");
+            leftAside.classList.remove("night");
+            leftAside.classList.add("day");
+            rightAside.classList.remove("night");
+            rightAside.classList.add("day");
+            dateBtns.classList.remove("night");
+            dateBtns.classList.add("day");
+            precip.classList.remove("precip-night");
+            precip.classList.add("precip-day");
+        }
     }
 
+    const generateStars = () => {
+        let galaxy = document.getElementById("precip");
+        let i = 0;
+
+        while (i <= 100) {
+            let star = document.createElement("div");
+            star.id = "star";
+            let xPosition = Math.random();
+            let yPosition = Math.random();
+            let starType = Math.floor((Math.random() * 3) + 1);
+            let position = {
+                "x": galaxy.clientWidth * xPosition,
+                "y": galaxy.clientHeight * yPosition
+            };
+            star.className = `star star-type${starType}`;
+            star.style.top = `${Math.floor(position.y)}px`;
+            star.style.left = `${Math.floor(position.x)}px`;
+            galaxy.appendChild(star);
+            i++;
+        }
+    };
+
     function renderCurrentTemp() {
-        let toggle = document.getElementById("checkbox2");
+        const toggle = document.getElementById("checkbox2");
         let fOrC = document.getElementById("temp");
         let currTemp = fOrC.innerHTML.slice(0, 2);
         let converted;
@@ -223,6 +276,8 @@
             fOrC.innerHTML = `${converted} F°`;
         }
     }
+
+
 
     axios.get('/getWeather').then((response => onFetchWeatherResponse(response)));
 

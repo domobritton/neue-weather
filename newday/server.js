@@ -90,6 +90,7 @@
         if (localWeatherData.dataPoints.length > 24) {
             localWeatherData.dataPoints.shift();
         }
+        console.log(localWeatherData);
     }
 
     app.get('/getWeather', (req, res) => {
