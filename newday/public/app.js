@@ -281,17 +281,42 @@
 
     axios.get('/getWeather').then((response => onFetchWeatherResponse(response)));
 
-    function onFetchWeatherResponse(response) {
+    function onFetchWeatherResponse(response, bool = false) {
+        let tempLabels, tempData, precipLabels, precipData;
         hideEle("loader");
         let respData = response.data;
         renderIcon(respData);
         renderHeaderData(respData);
-        tempConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
-        tempConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.temp);
-        precipConfig.labels = respData.dataPoints.map(dataPoint => dataPoint.time);
-        precipConfig.datasets[0].data = respData.dataPoints.map(dataPoint => dataPoint.precip);
-        renderWeatherChart(tempConfig);
-        renderPrecipChart(precipConfig);
+        tempLabels = respData.dataPoints.map(dataPoint => dataPoint.time);
+        tempData = respData.dataPoints.map(dataPoint => dataPoint.temp);
+        precipLabels = respData.dataPoints.map(dataPoint => dataPoint.time);
+        precipData = respData.dataPoints.map(dataPoint => dataPoint.precip);
+    
+        if (bool) {
+            tempConfig.labels = tempLabels.slice(25, 49);
+            tempConfig.datasets[0].data = tempData.slice(25, 49);
+            precipConfig.labels = precipLabels.slice(25, 49);
+            precipConfig.datasets[0].data = precipData.slice(25, 49);
+            renderWeatherChart(tempConfig);
+            renderPrecipChart(precipConfig);
+        } else {
+            tempConfig.labels = tempLabels.slice(0, 25);
+            tempConfig.datasets[0].data = tempData.slice(0, 25);
+            precipConfig.labels = precipLabels.slice(0, 25);
+            precipConfig.datasets[0].data = precipData.slice(0, 25);
+            renderWeatherChart(tempConfig);
+            renderPrecipChart(precipConfig);
+        }
+    }
+
+    function tomorrowClick() {
+        const bool = true;
+        axios.get('/getWeather').then((response => onFetchWeatherResponse(response, bool)));
+    }
+
+    function todayClick() {
+        const bool = false;
+        axios.get('/getWeather').then((response => onFetchWeatherResponse(response, bool)));
     }
 
     channel = pusher.subscribe('local-weather-chart');

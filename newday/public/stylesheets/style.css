@@ -24,13 +24,6 @@ body {
   top: 0;
 }
 
-.precip {
-  /* position: absolute;
-  top: 0;
-  height: 47%;
-  width: 100%; */
-}
-
 .toggle {
   position: absolute;
   width: 50px;
@@ -192,6 +185,14 @@ input:checked+.slider:before {
   height: 46%;
 }
 
+.today {
+  cursor: pointer;
+}
+
+.tomorrow {
+  cursor: pointer;
+}
+
 #weatherChart {
   position: absolute;
   bottom: 0;
@@ -199,6 +200,48 @@ input:checked+.slider:before {
   height: 90% !important;
   width: 100% !important;
   margin: 0 auto;
+}
+
+.navigation {
+  position: absolute;
+  width: 20%;
+  bottom: 25px;
+  right: 25px;
+}
+.navigation-inner {
+  float: right;
+  text-align: center;
+}
+
+.left, .up, .right, .down {
+  width: 50px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  color: lightgray;
+}
+
+.left {
+  margin-bottom: -50px;
+}
+
+.right {
+  margin-left: 120px;
+  padding-top: 4px;
+}
+
+.up {
+  margin-left: 60px;
+}
+
+.down {
+  margin-left: 60px;
+  padding-top: 4px;
+}
+
+@media all and (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
 }
 
 @-webkit-keyframes Gradient {

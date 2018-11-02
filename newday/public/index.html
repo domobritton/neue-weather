@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <title>Realtime Analytics</title>
+    <title>Neue Weather</title>
+    <meta charset=utf-8>
     <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD"
         crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:200">
@@ -83,8 +84,8 @@
     </section>
     <section id="date-btns" class="date-btns day">
         <div class="date-inner">
-            <div class="today">TODAY</div>
-            <div class="tomorrow">TOMORROW</div>
+            <div id="today" class="today" onclick="todayClick()">TODAY</div>
+            <div id="tomorrow" class="tomorrow" onclick="tomorrowClick()">TOMORROW</div>
         </div>
     </section>
     <section class="temperature">
@@ -94,6 +95,14 @@
         </div>
         <canvas id="weatherChart">
         </canvas>
+        <div class="navigation">
+            <div class="navigation-inner">
+                <div class="left">◀︎</div>
+                <div class="up">▲</div>
+                <div class="right">▶︎</div>
+                <div class="down">▼</div>
+            </div>
+        </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>

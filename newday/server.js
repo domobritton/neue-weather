@@ -62,7 +62,7 @@
         hourlyTime = data.hourly.data.map(time => timeConverter(time.time));
         hourlyTemp = data.hourly.data.map(temps => temps.temperature);
         hourlyPrecip = data.hourly.data.map(prec => prec.precipIntensity);
-        for (let i = 0; i < 23; i++) {
+        for (let i = 0; i < 47; i++) {
             let newDataPoint = {
                 time: hourlyTime[i],
                 temp: hourlyTemp[i],
@@ -87,7 +87,7 @@
             console.log("not found");
         }
      
-        if (localWeatherData.dataPoints.length > 24) {
+        if (localWeatherData.dataPoints.length > 48) {
             localWeatherData.dataPoints.shift();
         }
         console.log(localWeatherData);
