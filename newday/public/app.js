@@ -1,6 +1,6 @@
 {
     //  For pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
     let pusher = new Pusher("35eceb7b79993dd7be7e", {
             cluster: "us2",
