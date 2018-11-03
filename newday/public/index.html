@@ -36,7 +36,8 @@
                 <div class="inner-text">
                     <h1>Welcome to New Day.</h1>
                     <p>This unique weather app is easy on the eyes and provides you with current, daily and forecasted
-                        weather information. Use the arrow keys to look around.</p>
+                        weather information.</p>
+                        <p class="text-aside-center">Use the arrow keys to look around.</p>
                 </div>
             </div>
             <div class="left-aside-bottom">
@@ -55,23 +56,28 @@
                     </label>
                 </div>
                 <div class="social">
-                    <i class="fab fa-github fa-2x"></i>
-                    <i class="fab fa-linkedin fa-2x"></i>
+                    <a href="https://github.com/domobritton" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+                    <a href="https://www.linkedin.com/in/domonicbrittonadams/" target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
                 </div>
-                <a href="https://darksky.net/poweredby/" target="_blank">Powered By Dark Sky</a>
+                <a class="dark-sky" href="https://darksky.net/poweredby/" target="_blank">Powered By Dark Sky</a>
             </div>
         </div>
     </aside>
     <aside id="aside-right">
         <div id="right-aside" class="right-aside day">
             <div class="blur-aside"></div>
-            <div class="inner-aside">
+            <div class="right-inner-aside">
+                <div class="inner-text">
+                    <h1>5 Day Forecast.</h1>
+                </div>
+                <canvas id="aside-bar-chart"></canvas>
             </div>
             <div class="right-aside-bottom">
             </div>
         </div>
     </aside>
     <section id="precip" class="precip precip-day">
+        <div id="city"></div>
         <div class="toggle">
             <label class="switch" for="checkbox1">
                 <input type="checkbox" id="checkbox1" value="false" />
@@ -97,17 +103,17 @@
         </canvas>
         <div class="navigation">
             <div class="navigation-inner">
-                <div class="left">◀︎</div>
-                <div class="up">▲</div>
-                <div class="right">▶︎</div>
-                <div class="down">▼</div>
+                <div id="left">◀︎</div>
+                <div id="up">▲</div>
+                <div id="right">▶︎</div>
+                <div id="down">▼</div>
             </div>
         </div>
     </section>
     <footer id="footer" class="search">
         <div class="search-outer">
             <div class="search-inner">
-                <span><i class="fas fa-search"></i></span>
+                <span><i class="fas fa-search fa-lg"></i></span>
                 <input 
                 id="submit"
                 type="text" 

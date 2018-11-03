@@ -42,6 +42,14 @@ body {
   bottom: 0;
 }
 
+#city {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  font-size: 25px;
+  color: white;
+}
+
 .toggle {
   position: absolute;
   width: 50px;
@@ -107,8 +115,8 @@ input:checked+.slider:before {
 
 #icon {
   position: absolute;
-  top: 10px;
-  left: 20px;
+  top: 20px;
+  left: 25px;
 }
 
 #temp,
@@ -127,7 +135,6 @@ input:checked+.slider:before {
   position: relative;
   width: 50%;
   margin: 0 auto;
-  background-color: snow;
   height: 100px;
 }
 
@@ -140,16 +147,16 @@ input:checked+.slider:before {
 }
 
 .search-inner input {
-  height: 40px;
+  height: 50px;
   width: 100%;
   padding-left: 20px;
-  color: lightgray;
-  font-size: 14px;
+  color: gray;
+  font-size: 20px;
 }
 
 .fa-search {
   position: absolute;
-  top: 13px;
+  top: 18px;
   right: 20px;
   color: lightgray;
 }
@@ -261,41 +268,56 @@ input:checked+.slider:before {
   text-align: center;
 }
 
-.left,
-.up,
-.right,
-.down {
+#left,
+#up,
+#right,
+#down {
   width: 50px;
   border: 1px solid lightgray;
   border-radius: 5px;
   color: lightgray;
 }
 
-.left {
+#left {
   margin-bottom: -50px;
-  box-shadow: inset 1px -2px 2px rgba(211,211,211, 1);
 }
 
-.right {
+#right {
   margin-left: 120px;
   padding-top: 4px;
-  box-shadow: inset 1px -2px 2px rgba(211, 211, 211, 1);
 }
 
-.up {
+#up {
   margin-left: 60px;
-  box-shadow: inset 1px -2px 2px rgba(211, 211, 211, 1);
 }
 
-.down {
+#down {
   margin-left: 60px;
   padding-top: 4px;
+}
+
+.active1 {
   box-shadow: inset 1px -2px 2px rgba(211, 211, 211, 1);
+}
+
+.active2 {
+  box-shadow: inset -1px -2px 2px rgba(211, 211, 211, 1);
 }
 
 @media all and (max-width: 768px) {
   .navigation {
     display: none;
+  }
+  .inner-text p {
+    font-size: 12px;
+  }
+
+  .inner-text h1 {
+    font-size: 20px;
+  }
+
+  .dark-sky {
+    font-size: 12px;
   }
 }
 
@@ -419,9 +441,10 @@ input:checked+.slider:before {
   right: 0;
   padding: 3%;
   background-color: snow;
+  color: gray;
 }
 
-.inner-text h1 {
+.inner-text {
   text-align: center;
 }
 
@@ -454,11 +477,18 @@ a {
   margin-bottom: 20px;
 }
 
+.social a {
+  font-size: 20px;
+}
+
 .fa-github,
 .fa-linkedin {
   color: lightgray;
-  padding-right: 5%;
   cursor: pointer;
+}
+
+.fa-github {
+  padding-right: 5%;
 }
 
 .fa-github:hover,
@@ -496,6 +526,14 @@ a {
   background-color: snow;
 }
 
+.right-inner-aside {
+  height: 85%;
+}
+
+#aside-bar-chart {
+  height: 100%;
+}
+
 .inner-text h1 {
   text-align: center;
 }
@@ -518,15 +556,18 @@ a {
   animation-name: tonight;
   animation-duration: 5s;
   background-color: gray;
+  color: lightgray;
 }
 
 @keyframes tonight {
   from {
     background-color: snow;
+    color: gray;
   }
 
   to {
     background-color: gray;
+    color: lightgray;
   }
 }
 
@@ -534,15 +575,18 @@ a {
   animation-name: today;
   animation-duration: 5s;
   background-color: snow;
+  color: gray;
 }
 
 @keyframes today {
   from {
     background-color: gray;
+    color: lightgray;
   }
 
   to {
     background-color: snow;
+    color: gray;
   }
 }
 

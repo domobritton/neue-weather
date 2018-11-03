@@ -1,19 +1,20 @@
 {
-
-   //  For pusher logging - don't include this in production
+    //  For pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    let pusher = new Pusher('35eceb7b79993dd7be7e', {
-            cluster: 'us2',
+    let pusher = new Pusher("35eceb7b79993dd7be7e", {
+            cluster: "us2",
             encrypted: true
         }),
-        channel, weatherChartRef;
+        channel,
+        weatherChartRef;
 
-    const hideEle = (elementId) => {
-        document.getElementById(elementId).style.display = 'none';
-    }
+    const hideEle = elementId => {
+        document.getElementById(elementId).style.display = "none";
+    };
 
-    const renderWeatherChart = (weatherData) => {
+    // temperature chart
+    const renderWeatherChart = weatherData => {
         const ctx = document.getElementById("weatherChart").getContext("2d");
         weatherChartRef = new Chart(ctx, {
             type: "line",
@@ -40,12 +41,13 @@
                 }
             }
         });
-    }
+    };
 
-    const renderPrecipChart = (weatherData) => {
-        const ctx = document.getElementById("bar-chart");
+    // precip bar chart
+    const renderPrecipChart = weatherData => {
+        const ctx = document.getElementById("bar-chart").getContext("2d");
         let options = {};
-        precipChartRef = new Chart(ctx, {
+        window.precipChartRef = new Chart(ctx, {
             type: "bar",
             data: weatherData,
             options: {
@@ -71,16 +73,58 @@
                 }
             }
         });
-    }
+    };
+
+    // 5 day forecast
+    const renderDailyData = weatherData => {
+        const ctx = document.getElementById("aside-bar-chart").getContext("2d");
+        let options = {};
+        dailyChartRef = new Chart(ctx, {
+            type: "bar",
+            data: weatherData,
+            options: {
+                maintainAspectRatio: false,
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        gridLines: {
+                            color: "rgba(211, 211, 211, 0)"
+                        },
+                        ticks: {
+                            suggestedMin: 0
+                        }
+                    }]
+                }
+            }
+        });
+    };
+
+    const dailyConfig = {
+        labels: "",
+        datasets: [{
+                label: "L",
+                backgroundColor: "rgba(211, 211, 211, 0.5)",
+                data: [],
+            },
+            {
+                label: "H",
+                data: [],
+            }
+        ]
+    };
 
     const precipConfig = {
         labels: "",
         datasets: [{
-            label: "",
             backgroundColor: "rgba(211, 211, 211, 0.5)",
             data: []
         }]
-    }
+    };
 
     const tempConfig = {
         labels: "",
@@ -88,11 +132,11 @@
             label: "",
             fill: false,
             borderColor: "rgba(211, 211, 211, 1)",
-            borderCapStyle: 'butt',
+            borderCapStyle: "butt",
             borderWidth: 5,
             borderDash: [],
             borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
+            borderJoinStyle: "miter",
             pointBorderColor: "rgba(211, 211, 211, 1)",
             pointBackgroundColor: "rgba(211, 211, 211, 1)",
             pointBorderWidth: 1,
@@ -103,15 +147,38 @@
             pointRadius: 1,
             pointHitRadius: 10,
             data: [],
-            spanGaps: false,
+            spanGaps: false
         }]
     };
 
-    const renderIcon = (resp) => {
+    const storeDailyData = resp => {
+        let days, dailyLow, dailyHigh;
+        let dayGroup = {
+            0: 'Su',
+            1: 'M',
+            2: 'T',
+            3: 'W',
+            4: 'Th',
+            5: 'F',
+            6: 'Sa'
+        };
+        days = resp.dailyDataPoints.map(day => day.date);
+        dailyLow = resp.dailyDataPoints.map(day => day.dailyLow);
+        dailyHigh = resp.dailyDataPoints.map(day => day.dailyHigh);
+        let labels = days[0].map(day => {
+            return dayGroup[day];
+        });
+        dailyConfig.labels = labels.slice(0, 5);
+        dailyConfig.datasets[0].data = dailyLow[0].slice(0, 5);
+        dailyConfig.datasets[1].data = dailyHigh[0].slice(0, 5);
+        renderDailyData(dailyConfig);
+    }
+
+    const renderIcon = resp => {
         const icons = resp.dataPoints.map(dataPoint => dataPoint.icon);
         const icon = icons[icons.length - 1];
         const skycon = new Skycons({
-            "color": "rgba(255,255,255,1)"
+            color: "rgba(255,255,255,1)"
         });
 
         switch (icon) {
@@ -149,53 +216,90 @@
                 skycon.set("icon", Skycons.CLEAR_DAY);
         }
         skycon.play();
-    }
+    };
 
-    const renderHeaderData = (resp) => {
+    const renderHeaderData = resp => {
         const temp = resp.dataPoints.map(dataPoint => dataPoint.temp);
         const clouds = resp.dataPoints.map(dataPoint => dataPoint.clouds);
         const currTemp = temp[temp.length - 1];
         const currCloud = clouds[clouds.length - 1];
         document.getElementById("temp").innerHTML = `${Math.round(currTemp)} F°`;
-        document.getElementById("clouds").innerHTML = `Cloud cover is at ${Math.round(currCloud * 100)} %`;
-    }
+        document.getElementById(
+            "clouds"
+        ).innerHTML = `Cloud cover is at ${Math.round(currCloud * 100)} %`;
+    };
 
     const slideHeader = () => {
         const header = document.getElementById("header");
+        const down = document.getElementById("down");
+        down.classList.add("active1");
+        setTimeout(() => down.classList.remove("active1"), 250);
         header.classList.add("open");
         setTimeout(() => header.classList.remove("open"), 4000);
-    }
+    };
 
     const slideFaq = () => {
         const aside = document.getElementById("aside-left");
+        const right = document.getElementById("right");
+        right.classList.add("active2");
+        setTimeout(() => right.classList.remove("active2"), 250);
         aside.classList.add("open");
         setTimeout(() => aside.classList.remove("open"), 10000);
-    }
+    };
 
     const slideForecast = () => {
         const aside = document.getElementById("aside-right");
+        const left = document.getElementById("left");
+        left.classList.add("active1");
+        setTimeout(() => left.classList.remove("active1"), 250);
         aside.classList.add("open");
         setTimeout(() => aside.classList.remove("open"), 10000);
-    }
+    };
 
     const slideFooter = () => {
         const footer = document.getElementById("footer");
+        const up = document.getElementById("up");
+        up.classList.add("active1");
+        setTimeout(() => up.classList.remove("active1"), 250);
         footer.classList.add("open");
+    };
+
+    const unslideHeader = () => {
+        document.getElementById("header").classList.remove("open");
+        const down = document.getElementById("down");
+        down.classList.add("active1");
+        setTimeout(() => down.classList.remove("active1"), 250);
     }
 
-    const removeClass = () => {
-        const ids = ["aside-left", "aside-right", "header", "footer"];
-        ids.forEach((id) => {
-            document.getElementById(id).classList.remove("open");
-        });
+    const unslideFaq = () => {
+        document.getElementById("aside-left").classList.remove("open");
+        const right = document.getElementById("right");
+        right.classList.add("active2");
+        setTimeout(() => right.classList.remove("active2"), 250);
+    }
+
+    const unslideForecast = () => {
+        document.getElementById("aside-right").classList.remove("open");
+        const left = document.getElementById("left");
+        left.classList.add("active1");
+        setTimeout(() => left.classList.remove("active1"), 250);
+    }
+
+    const unslideFooter = () => {
+        document.getElementById("footer").classList.remove("open");
+        const up = document.getElementById("up");
+        up.classList.add("active1");
+        setTimeout(() => up.classList.remove("active1"), 250);
     }
 
     const keys = {
         state: false
     };
 
-    document.addEventListener("keydown", (e) => {
-        let bool = keys.state === false ? keys.state = true : keys.state = false;
+    document.addEventListener("keydown", e => {
+        let bool =
+            keys.state === false ? (keys.state = true) : (keys.state = false);
+        let key = e.keyCode;
         if (bool) {
             if (e.keyCode === 40) {
                 slideHeader();
@@ -211,22 +315,24 @@
             }
         } else {
             if (e.keyCode === 40) {
-                removeClass();
+                unslideHeader();
             }
             if (e.keyCode === 39) {
-                removeClass();
+                unslideFaq();
             }
             if (e.keyCode === 37) {
-                removeClass();
+                unslideForecast();
             }
             if (e.keyCode === 38) {
-                removeClass();
+                unslideFooter();
             }
         }
     });
 
     document.getElementById("checkbox1").addEventListener("click", dayOrNight);
-    document.getElementById("checkbox2").addEventListener("click", renderCurrentTemp);
+    document
+        .getElementById("checkbox2")
+        .addEventListener("click", renderCurrentTemp);
 
     function dayOrNight() {
         const header = document.getElementById("blur");
@@ -268,13 +374,24 @@
 
     const currentCity = {
         city: ""
-    } 
+    };
+
+    const renderCity = (val) => {
+        const label = document.getElementById("city");
+        const city = val.split(' ').map(word => {
+            return word[0].toUpperCase() + word.slice(1);
+        }).join(' ');
+        label.innerHTML = city;
+    }
 
     function handleInput(val) {
         currentCity.city = val;
-        axios.get(`/getWeather/${val}`).then((response => onFetchWeatherResponse(response)));
+        renderCity(val);
+        axios
+            .get(`/getWeather/${val}`)
+            .then(response => onFetchWeatherResponse(response));
         document.getElementById("submit").value = "";
-        removeClass();
+        unslideFooter();
     }
 
     const generateStars = () => {
@@ -286,10 +403,10 @@
             star.id = "star";
             let xPosition = Math.random();
             let yPosition = Math.random();
-            let starType = Math.floor((Math.random() * 3) + 1);
+            let starType = Math.floor(Math.random() * 3 + 1);
             let position = {
-                "x": galaxy.clientWidth * xPosition,
-                "y": galaxy.clientHeight * yPosition
+                x: galaxy.clientWidth * xPosition,
+                y: galaxy.clientHeight * yPosition
             };
             star.className = `star star-type${starType}`;
             star.style.top = `${Math.floor(position.y)}px`;
@@ -314,7 +431,7 @@
         } else {
             toggle.value = "false";
             label.innerHTML = "°F TEMP";
-            converted = Math.round(currTemp * 9 / 5 + 32)
+            converted = Math.round(currTemp * 9 / 5 + 32);
             fOrC.innerHTML = `${converted} F°`;
         }
     }
@@ -325,6 +442,7 @@
         let respData = response.data;
         renderIcon(respData);
         renderHeaderData(respData);
+        storeDailyData(respData);
         tempLabels = respData.dataPoints.map(dataPoint => dataPoint.time);
         tempData = respData.dataPoints.map(dataPoint => dataPoint.temp);
         precipLabels = respData.dataPoints.map(dataPoint => dataPoint.time);
@@ -350,31 +468,50 @@
     function tomorrowClick() {
         const bool = true;
         const val = currentCity.city;
-        axios.get(`/getWeather/${val}`).then((response => onFetchWeatherResponse(response, bool)));
+        if (window.precipChartRef != undefined) {
+            window.precipChartRef.destroy();
+        }
+        axios
+            .get(`/getWeather/${val}`)
+            .then(response => onFetchWeatherResponse(response, bool));
     }
 
     function todayClick() {
         const bool = false;
         const val = currentCity.city;
-        axios.get(`/getWeather/${val}`).then((response => onFetchWeatherResponse(response, bool)));
+        if (window.precipChartRef != undefined) {
+            window.precipChartRef.destroy();
+        }
+        axios
+            .get(`/getWeather/${val}`)
+            .then(response => onFetchWeatherResponse(response, bool));
     }
 
-    channel = pusher.subscribe('local-weather-chart');
-    channel.bind('new-weather', (data) => {
+    channel = pusher.subscribe("local-weather-chart");
+    channel.bind("new-weather", data => {
         let newWeatherData = data.dataPoint;
         if (weatherChartRef.data.labels.length > 15) {
             weatherChartRef.data.labels.shift();
-            precipChartRef.data.labels.shift();
+            window.precipChartRef.data.labels.shift();
             weatherChartRef.data.datasets[0].data.shift();
-            precipChartRef.data.datasets[0].data.shift();
+            window.precipChartRef.data.datasets[0].data.shift();
         }
         weatherChartRef.data.labels.push(newWeatherData.time);
-        precipChartRef.data.labels.push(newWeatherData.time);
+        window.precipChartRef.data.labels.push(newWeatherData.time);
         weatherChartRef.data.datasets[0].data.push(newWeatherData.temp);
-        precipChartRef.data.datasets[0].data.push(newWeatherData.precip);
+        window.precipChartRef.data.datasets[0].data.push(newWeatherData.precip);
 
         weatherChartRef.update();
-        precipChartRef.update();
+        window.precipChartRef.update();
     });
 
+    axios
+        .get(`/getWeather/san francisco`)
+        .then(response => fetchInitial(response));
+
+        const fetchInitial = (response) => {
+            currentCity.city = 'san francisco';
+            renderCity(currentCity.city);
+            onFetchWeatherResponse(response);
+        }
 }
