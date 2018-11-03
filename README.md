@@ -1,10 +1,10 @@
 # New Day 
 
-[New Day Live](https://google.com/)
+[Neue Weather Live](https://neueweather.com/)
 
 ## Overview
 
-Weather in California may be boring, but your weather app doesn't have to be. **New Day** is a beautiful weather application that elevates the user experience to art. 
+Weather in California may be boring, but your weather app doesn't have to be. **Neue Weather** is a beautiful weather application that elevates the user experience to art. 
 
 This application is inspired by mobile apps such as Dark Sky and Weathertron, and aims to bring a very clean and modern interface to the desktop experience--utilizing the latest best practices in Vanilla Javascript(ES6), CSS3, and HTML5.
 
