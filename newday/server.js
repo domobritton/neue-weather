@@ -1,5 +1,6 @@
 {
     const express = require('express');
+    const getCoords = require('city-to-coords');
     // import express from 'express';
     const path = require('path');
     const bodyParser = require('body-parser');
@@ -28,20 +29,6 @@
         dataPoints: []
     }
 
-    const url =
-        "https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/37.8267,-122.4233?exclude=minutely";
-    const getWeather = async url => {
-        try {
-            const response = await axios.get(url);
-            const data = response.data;
-            updateWeather(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    setTimeout(() => getWeather(url), 10000);
-
     const timeConverter = (UNIX_timestamp) => {
         let unix, hourC, minuteC, hours, minutes;
         unix = new Date(UNIX_timestamp * 1000);
@@ -58,10 +45,10 @@
         temp = data.currently.temperature;
         icon = data.currently.icon;
         clouds = data.currently.cloudCover;
-        precip = data.currently.precipIntensity;
+        precip = data.currently.precipProbability;
         hourlyTime = data.hourly.data.map(time => timeConverter(time.time));
         hourlyTemp = data.hourly.data.map(temps => temps.temperature);
-        hourlyPrecip = data.hourly.data.map(prec => prec.precipIntensity);
+        hourlyPrecip = data.hourly.data.map(prec => prec.precipProbability);
         for (let i = 0; i < 47; i++) {
             let newDataPoint = {
                 time: hourlyTime[i],
@@ -86,21 +73,51 @@
         } else {
             console.log("not found");
         }
-     
+
         if (localWeatherData.dataPoints.length > 48) {
             localWeatherData.dataPoints.shift();
         }
         console.log(localWeatherData);
     }
 
-    app.get('/getWeather', (req, res) => {
-        res.send(localWeatherData);
+    app.get('/getWeather/:city', async (req, res, next) => {
+        const {
+            city
+        } = req.params;
+        console.log(city);
+        try {
+            let data = await getCords(city);
+            let lat = data.lat.toString();
+            let long = data.lng.toString();
+            const url = `https://api.darksky.net/forecast/c6a6fc2e87187ffa21074dad430396cd/${lat},${long}?exclude=minutely`;
+            let weather = await getWeather(url);
+            res.send(localWeatherData);
+        } catch (e) {
+            next(e);
+        }
     });
+
+    async function getCords(city, res) {
+        const response = await getCoords(city);
+        return response;
+    };
+
+    const getWeather = async (url, res) => {
+        console.log(url);
+        try {
+            const response = await axios.get(url);
+            const data = response.data;
+            updateWeather(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     module.exports = app;
 
     app.listen(9000, () => {
         console.log('listening on port 9000!')
     });
-    getWeather(url);
+
+
 }

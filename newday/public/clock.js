@@ -23,12 +23,14 @@ document.getElementById("checkbox3").addEventListener("click", toggleTime);
 
 function toggleTime() {
     let toggle = document.getElementById("checkbox3");
-
+    let hours = document.getElementById("hours");
     if (toggle.value === "false") {
         toggle.value = "true";
+        hours.innerHTML = "24 HOUR"
         digi();
     } else if (toggle.value === "true") {
         toggle.value = "false";
+        hours.innerHTML = "12 HOUR"
         digi();
     }
 }

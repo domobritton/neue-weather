@@ -1,6 +1,6 @@
 {
 
-    // For pusher logging - don't include this in production
+   //  For pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
     let pusher = new Pusher('35eceb7b79993dd7be7e', {
@@ -62,6 +62,10 @@
                     yAxes: [{
                         gridLines: {
                             color: "rgba(211, 211, 211, 0.0)"
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 1
                         }
                     }]
                 }
@@ -174,26 +178,50 @@
         setTimeout(() => aside.classList.remove("open"), 10000);
     }
 
+    const slideFooter = () => {
+        const footer = document.getElementById("footer");
+        footer.classList.add("open");
+    }
+
     const removeClass = () => {
-        const ids = ["aside-left", "aside-right", "header"];
+        const ids = ["aside-left", "aside-right", "header", "footer"];
         ids.forEach((id) => {
             document.getElementById(id).classList.remove("open");
         });
     }
 
+    const keys = {
+        state: false
+    };
+
     document.addEventListener("keydown", (e) => {
-        e.preventDefault();
-        if (e.keyCode === 40) {
-            slideHeader();
-        }
-        if (e.keyCode === 39) {
-            slideFaq();
-        }
-        if (e.keyCode === 37) {
-            slideForecast();
-        }
-        if (e.keyCode === 32) {
-            removeClass();
+        let bool = keys.state === false ? keys.state = true : keys.state = false;
+        if (bool) {
+            if (e.keyCode === 40) {
+                slideHeader();
+            }
+            if (e.keyCode === 39) {
+                slideFaq();
+            }
+            if (e.keyCode === 37) {
+                slideForecast();
+            }
+            if (e.keyCode === 38) {
+                slideFooter();
+            }
+        } else {
+            if (e.keyCode === 40) {
+                removeClass();
+            }
+            if (e.keyCode === 39) {
+                removeClass();
+            }
+            if (e.keyCode === 37) {
+                removeClass();
+            }
+            if (e.keyCode === 38) {
+                removeClass();
+            }
         }
     });
 
@@ -238,6 +266,17 @@
         }
     }
 
+    const currentCity = {
+        city: ""
+    } 
+
+    function handleInput(val) {
+        currentCity.city = val;
+        axios.get(`/getWeather/${val}`).then((response => onFetchWeatherResponse(response)));
+        document.getElementById("submit").value = "";
+        removeClass();
+    }
+
     const generateStars = () => {
         let galaxy = document.getElementById("precip");
         let i = 0;
@@ -263,23 +302,22 @@
     function renderCurrentTemp() {
         const toggle = document.getElementById("checkbox2");
         let fOrC = document.getElementById("temp");
+        let label = document.getElementById("temps");
         let currTemp = fOrC.innerHTML.slice(0, 2);
         let converted;
 
         if (toggle.value === "false") {
             toggle.value = "true";
+            label.innerHTML = "°C TEMP";
             converted = Math.round((currTemp - 32) * 5 / 9);
             fOrC.innerHTML = `${converted} C°`;
         } else {
             toggle.value = "false";
+            label.innerHTML = "°F TEMP";
             converted = Math.round(currTemp * 9 / 5 + 32)
             fOrC.innerHTML = `${converted} F°`;
         }
     }
-
-
-
-    axios.get('/getWeather').then((response => onFetchWeatherResponse(response)));
 
     function onFetchWeatherResponse(response, bool = false) {
         let tempLabels, tempData, precipLabels, precipData;
@@ -291,7 +329,7 @@
         tempData = respData.dataPoints.map(dataPoint => dataPoint.temp);
         precipLabels = respData.dataPoints.map(dataPoint => dataPoint.time);
         precipData = respData.dataPoints.map(dataPoint => dataPoint.precip);
-    
+
         if (bool) {
             tempConfig.labels = tempLabels.slice(25, 49);
             tempConfig.datasets[0].data = tempData.slice(25, 49);
@@ -311,12 +349,14 @@
 
     function tomorrowClick() {
         const bool = true;
-        axios.get('/getWeather').then((response => onFetchWeatherResponse(response, bool)));
+        const val = currentCity.city;
+        axios.get(`/getWeather/${val}`).then((response => onFetchWeatherResponse(response, bool)));
     }
 
     function todayClick() {
         const bool = false;
-        axios.get('/getWeather').then((response => onFetchWeatherResponse(response, bool)));
+        const val = currentCity.city;
+        axios.get(`/getWeather/${val}`).then((response => onFetchWeatherResponse(response, bool)));
     }
 
     channel = pusher.subscribe('local-weather-chart');

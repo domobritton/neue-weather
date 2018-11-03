@@ -41,14 +41,14 @@
             </div>
             <div class="left-aside-bottom">
                 <div class="toggle-left">
-                    <h4>°F TEMP</h4>
+                    <h4 id="temps">°F TEMP</h4>
                     <label class="switch" for="checkbox2">
                         <input type="checkbox" id="checkbox2" value="false" />
                         <div class="slider round"></div>
                     </label>
                 </div>
                 <div class="toggle-left">
-                    <h4>12 HOUR</h4>
+                    <h4 id="hours">12 HOUR</h4>
                     <label class="switch" for="checkbox3">
                         <input type="checkbox" id="checkbox3" value="false" />
                         <div class="slider round"></div>
@@ -62,15 +62,15 @@
             </div>
         </div>
     </aside>
-        <aside id="aside-right">
-            <div id="right-aside" class="right-aside day">
-                <div class="blur-aside"></div>
-                <div class="inner-aside">
-                </div>
-                <div class="right-aside-bottom">
-                </div>
+    <aside id="aside-right">
+        <div id="right-aside" class="right-aside day">
+            <div class="blur-aside"></div>
+            <div class="inner-aside">
             </div>
-        </aside>
+            <div class="right-aside-bottom">
+            </div>
+        </div>
+    </aside>
     <section id="precip" class="precip precip-day">
         <div class="toggle">
             <label class="switch" for="checkbox1">
@@ -104,6 +104,21 @@
             </div>
         </div>
     </section>
+    <footer id="footer" class="search">
+        <div class="search-outer">
+            <div class="search-inner">
+                <span><i class="fas fa-search"></i></span>
+                <input 
+                id="submit"
+                type="text" 
+                aria-label="Search for city" 
+                results=2
+                autosave=2
+                placeholder="ENTER A LOCATION"
+                onchange="handleInput(this.value)" />
+            </div>
+        </div>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
     <script src="https://js.pusher.com/4.0/pusher.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
