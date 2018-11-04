@@ -83,6 +83,7 @@
         icon,
         clouds
       };
+      
       localWeatherData.dataPoints.push(newDataPoint);
       pusher.trigger("local-weather-chart", "new-weather", {
         dataPoint: newDataPoint
