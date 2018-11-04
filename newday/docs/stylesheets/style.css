@@ -1,0 +1,873 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: Raleway;
+  background-color: snow;
+}
+
+#header {
+  position: fixed;
+  width: 100%;
+  height: 120px;
+  top: -120px;
+  background-color: transparent;
+  z-index: 10;
+  overflow-y: hidden;
+  transition-property: all;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+#header.open {
+  top: 0;
+}
+
+#footer {
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  overflow-y: hidden;
+  transition-property: all;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  text-align: center;
+}
+
+#footer.open {
+  bottom: 0;
+}
+
+#city {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  font-size: 25px;
+  color: white;
+}
+
+.toggle {
+  position: absolute;
+  width: 50px;
+  top: 20px;
+  right: 25px;
+  z-index: 1;
+}
+
+.switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  background-color: rgba(211, 211, 211, 0.7);
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+}
+
+.slider:before {
+  background-color: rgba(255, 255, 255, 0.5);
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 26px;
+}
+
+input:checked+.slider {
+  background-color: lightgray;
+}
+
+input:checked+.slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.left-header {
+  display: flex;
+  justify-content: center;
+  width: 60%;
+}
+
+#icon {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+}
+
+#temp,
+#clouds {
+  font-size: 40px;
+  color: #fff;
+  margin-top: 40px;
+}
+
+#temp {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.search-outer {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
+  height: 100px;
+}
+
+.search-inner {
+  position: absolute;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search-inner input {
+  height: 50px;
+  width: 100%;
+  padding-left: 20px;
+  color: gray;
+  font-size: 20px;
+}
+
+.fa-search {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  color: lightgray;
+}
+
+@media all and (max-width: 1230px) {
+  #temp {
+    display: none;
+  }
+
+  #clouds {
+    display: none;
+  }
+}
+
+#time {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  color: #fff;
+  font-size: 70px;
+  font-weight: 900;
+}
+
+.loader {
+  margin-left: 47%;
+  margin-top: -3%;
+}
+
+.precip-title {
+  position: absolute;
+  bottom: 20px;
+  left: 25px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.temp-title {
+  position: absolute;
+  top: 10px;
+  left: 25px;
+  color: lightgray;
+  font-size: 18px;
+}
+
+#bar-chart {
+  position: absolute;
+  top: 0;
+  margin: 0px auto;
+  margin-top: 20px;
+  height: 90% !important;
+  width: 100% !important;
+}
+
+.date-btns {
+  position: absolute;
+  height: 60px;
+  width: 100%;
+  background-color: #fff;
+  top: 45%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.date-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  color: lightgray;
+  font-size: 45px;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.temperature {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 46%;
+}
+
+.today {
+  cursor: pointer;
+}
+
+.tomorrow {
+  cursor: pointer;
+}
+
+#weatherChart {
+  position: absolute;
+  bottom: 0;
+  margin-top: 20px;
+  height: 90% !important;
+  width: 100% !important;
+  margin: 0 auto;
+}
+
+.navigation {
+  position: absolute;
+  width: 20%;
+  bottom: 25px;
+  right: 25px;
+}
+
+.navigation-inner {
+  float: right;
+  text-align: center;
+}
+
+#left,
+#up,
+#right,
+#down {
+  width: 50px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  color: lightgray;
+}
+
+#left {
+  margin-bottom: -50px;
+}
+
+#right {
+  margin-left: 120px;
+  padding-top: 4px;
+}
+
+#up {
+  margin-left: 60px;
+}
+
+#down {
+  margin-left: 60px;
+  padding-top: 4px;
+}
+
+.active1 {
+  box-shadow: inset 1px -2px 2px rgba(211, 211, 211, 1);
+}
+
+.active2 {
+  box-shadow: inset -1px -2px 2px rgba(211, 211, 211, 1);
+}
+
+@media all and (max-width: 768px) {
+  .navigation {
+    display: none;
+  }
+  .inner-text p {
+    font-size: 12px;
+  }
+
+  .inner-text h1 {
+    font-size: 20px;
+  }
+
+  .dark-sky {
+    font-size: 12px;
+  }
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%
+  }
+
+  50% {
+    background-position: 100% 50%
+  }
+
+  100% {
+    background-position: 0% 50%
+  }
+}
+
+.blur {
+  background: url('./header_img.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  filter: blur(8px);
+  position: absolute;
+  height: 200px;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+}
+
+.blur-night {
+  background: url('./header_img_night.jpg') no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  filter: blur(8px);
+  position: absolute;
+  height: 200px;
+  top: -50px;
+  left: -50px;
+  right: -50px;
+  bottom: -50px;
+}
+
+
+.widget {
+  position: relative;
+  border-top: 2px solid rgba(255, 255, 255, 0);
+  border-bottom: 1px solid rgba(255, 255, 255, .10);
+  height: 133px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.inner-header-box {
+  position: relative;
+  width: 100%;
+}
+
+.center {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* aside left */
+#aside-left {
+  position: absolute;
+  width: 25%;
+  height: 100vh;
+  top: 0;
+  left: -350px;
+  background-color: transparent;
+  z-index: 10;
+  overflow-x: hidden;
+  transition-property: all;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+#aside-left.open {
+  left: 0;
+}
+
+.left-aside {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 3%;
+  background-color: snow;
+  color: gray;
+}
+
+.inner-text {
+  text-align: center;
+}
+
+.left-aside-bottom {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 60px;
+}
+
+.left-aside-bottom h4 {
+  font-size: 20px;
+  color: lightgray;
+}
+
+p {
+  font-size: 1em;
+}
+
+a {
+  text-decoration: none;
+  font-size: 0.8em;
+  color: gray;
+}
+
+.social {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.social a {
+  font-size: 20px;
+}
+
+.fa-github,
+.fa-linkedin {
+  color: lightgray;
+  cursor: pointer;
+}
+
+.fa-github {
+  padding-right: 5%;
+}
+
+.fa-github:hover,
+.fa-linkedin:hover {
+  color: gray;
+}
+
+/* aside right */
+#aside-right {
+  position: absolute;
+  width: 25%;
+  height: 100vh;
+  top: 0;
+  right: -350px;
+  background-color: transparent;
+  z-index: 10;
+  overflow-x: hidden;
+  transition-property: all;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+#aside-right.open {
+  right: 0;
+}
+
+.right-aside {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 3%;
+  background-color: snow;
+}
+
+.right-inner-aside {
+  height: 85%;
+}
+
+#aside-bar-chart {
+  height: 100%;
+}
+
+.inner-text h1 {
+  text-align: center;
+}
+
+.right-aside-bottom {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 60px;
+}
+
+.right-aside-bottom h4 {
+  font-size: 20px;
+  color: lightgray;
+}
+
+.night {
+  animation-name: tonight;
+  animation-duration: 5s;
+  background-color: gray;
+  color: lightgray;
+}
+
+@keyframes tonight {
+  from {
+    background-color: snow;
+    color: gray;
+  }
+
+  to {
+    background-color: gray;
+    color: lightgray;
+  }
+}
+
+.day {
+  animation-name: today;
+  animation-duration: 5s;
+  background-color: snow;
+  color: gray;
+}
+
+@keyframes today {
+  from {
+    background-color: gray;
+    color: lightgray;
+  }
+
+  to {
+    background-color: snow;
+    color: gray;
+  }
+}
+
+.precip-day {
+  position: absolute;
+  top: 0;
+  height: 47%;
+  width: 100%;
+  background: linear-gradient(-45deg, #60c2d5, #23a6d5, #23A6D5, #23D5AB);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.precip-night {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 47%;
+  width: 100%;
+  background: linear-gradient(-45deg, #262631, #37346b, #18181b, #313162);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.precip-night .star {
+  position: absolute;
+  background-color: white;
+}
+
+.precip-night .star-type1 {
+  width: 1px;
+  height: 1px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 1px 1px white;
+  box-shadow: 0 0 1px 1px white;
+  -webkit-animation: twinkle_one 4s ease-in-out infinite;
+  -moz-animation: twinkle_one 4s ease-in-out infinite;
+  -o-animation: twinkle_one 4s ease-in-out infinite;
+  animation: twinkle_one 4s ease-in-out infinite;
+}
+
+.precip-night .star-type2 {
+  width: 2px;
+  height: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 2px 1px white;
+  box-shadow: 0 0 2px 1px white;
+  -webkit-animation: twinkle_two 12s ease-in-out infinite;
+  -moz-animation: twinkle_two 12s ease-in-out infinite;
+  -o-animation: twinkle_two 12s ease-in-out infinite;
+  animation: twinkle_two 12s ease-in-out infinite;
+}
+
+.precip-night .star-type3 {
+  width: 2px;
+  height: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 2px 0 white;
+  box-shadow: 0 0 2px 0 white;
+  -webkit-animation: twinkle_three 7s ease-in-out infinite;
+  -moz-animation: twinkle_three 7s ease-in-out infinite;
+  -o-animation: twinkle_three 7s ease-in-out infinite;
+  animation: twinkle_three 7s ease-in-out infinite;
+}
+
+@-webkit-keyframes twinkle_one {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes twinkle_one {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes twinkle_one {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle_one {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes twinkle_two {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes twinkle_two {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes twinkle_two {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle_two {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes twinkle_three {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes twinkle_three {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes twinkle_three {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes twinkle_three {
+  0% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
