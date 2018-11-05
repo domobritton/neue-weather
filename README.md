@@ -13,11 +13,11 @@ This application is inspired by mobile apps such as Dark Sky and Weathertron, an
 ## Technologies
 `Vanilla JS` for logic
 
-`Node.js and Express` server-side API calls for weather data
+`Node.js / Express` Runtime environment to execute server side rendering to the browser, with Express Framework
 
-`Chart.js` charts for temp curve line and bar graphs
+`Chart.js` Charts for temp curve line and bar graphs
 
-`Dark Sky` weather `API` for JSON data
+`Dark Sky` weather `API` for JSON data (fetched with axios and async await calls)
 
 `Pusher` to build scalable, real time functionality to features
 
