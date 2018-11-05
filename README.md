@@ -8,7 +8,7 @@ Weather in California may be boring, but your weather app doesn't have to be. **
 
 This application is inspired by mobile apps such as Dark Sky and Weathertron, and aims to bring a very clean and modern interface to the desktop experience--utilizing the latest best practices in Vanilla Javascript(ES6), CSS3, and HTML5.
 
-![](new_weather.gif)
+![](new weather.gif)
 ## Functionality
 
 * Users can visualize weather data representations of temperature(in F° or C°), cloud cover, and a 7-day forecast
