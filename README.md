@@ -1,6 +1,6 @@
 # Neue Weather 
 
-[Neue Weather Live](https://neueweather.com/)
+[Neue Weather Live](https://neue-weather.herokuapp.com/)
 
 ## Overview
 
