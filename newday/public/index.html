@@ -14,6 +14,13 @@
 </head>
 
 <body id="body" class="day" onload="digi()">
+    <div id="loading-page">
+        <div id="loader" class="loader">
+            <canvas id="icon1" width="70" height="70"></canvas>
+            <br />
+            Looking outside for you. One sec...
+        </div>
+    </div>
     <header id="header">
         <div class="widget center">
             <div id="blur" class="blur"></div>
@@ -97,9 +104,6 @@
     </section>
     <section class="temperature">
         <div class="temp-title">TEMPERATURE</div>
-        <div id="loader" class="loader">
-            Loading...
-        </div>
         <canvas id="weatherChart">
         </canvas>
         <div class="navigation">
@@ -114,7 +118,7 @@
             <button id="faq" onclick="buttonClick(1)"><i class="fas fa-info-circle fa-lg"></i></button>
             <button id="search" onclick="buttonClick(2)"><i class="fas fa-search fa-lg"></i></button>
             <button id="forecast" onclick="buttonClick(3)"><i class="far fa-chart-bar fa-lg"></i></button>
-            <button id="clock" onclick="buttonClick(4)"><i class="far fa-clock fa-lg"></i></button>  
+            <button id="clock" onclick="buttonClick(4)"><i class="far fa-clock fa-lg"></i></button>
         </div>
     </section>
     <footer id="footer" class="search">

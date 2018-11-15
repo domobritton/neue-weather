@@ -189,10 +189,10 @@ input:checked+.slider:before {
   font-weight: 900;
 }
 
-.loader {
+/* .loader {
   margin-left: 47%;
   margin-top: -3%;
-}
+} */
 
 .precip-title {
   position: absolute;
@@ -1022,3 +1022,22 @@ button:focus {
   outline: 0;
 }
 
+#loading-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+
+}
+
+#loader {
+  display: block;
+}

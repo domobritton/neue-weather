@@ -9,10 +9,18 @@
         channel,
         weatherChartRef;
 
+
+    // loader
     const hideEle = elementId => {
         document.getElementById(elementId).style.display = "none";
     };
 
+    const skycons = new Skycons({
+        "color": "darkgray"
+    });
+    skycons.add(document.getElementById("icon1"), Skycons.PARTLY_CLOUDY_DAY);
+    skycons.play();
+    // 
     // temperature chart
     const renderWeatherChart = weatherData => {
         const ctx = document.getElementById("weatherChart").getContext("2d");
@@ -489,7 +497,7 @@
 
     function onFetchWeatherResponse(response, bool = false) {
         let tempLabels, tempData, precipLabels, precipData;
-        hideEle("loader");
+        hideEle("loading-page");
         let respData = response.data;
         renderIcon(respData);
         renderHeaderData(respData);
@@ -539,7 +547,7 @@
     }
 
     channel = pusher.subscribe("local-weather-chart");
-    channel.bind("new-weather", data => {
+    channel.bind("new-weather", function (data) {
         let newWeatherData = data.dataPoint;
         if (weatherChartRef.data.labels.length > 15) {
             weatherChartRef.data.labels.shift();
