@@ -34,10 +34,11 @@
             <div class="blur-aside"></div>
             <div class="inner-aside center-aside">
                 <div class="inner-text">
-                    <h1>Welcome to Neue Weather.</h1>
+                    <h1>Welcome to<br />
+                        Neue Weather.</h1>
                     <p>This unique weather app is easy on the eyes and provides you with current, daily and forecasted
                         weather information.</p>
-                        <p class="text-aside-center">Use the arrow keys to look around.</p>
+                    <p class="text-aside-center">Use the arrow keys to look around.</p>
                 </div>
             </div>
             <div class="left-aside-bottom">
@@ -109,19 +110,19 @@
                 <div id="down">▼</div>
             </div>
         </div>
+        <div class="mobile-footer">
+            <button id="faq" onclick="buttonClick(1)"><i class="fas fa-info-circle fa-lg"></i></button>
+            <button id="search" onclick="buttonClick(2)"><i class="fas fa-search fa-lg"></i></button>
+            <button id="forecast" onclick="buttonClick(3)"><i class="far fa-chart-bar fa-lg"></i></button>
+            <button id="clock" onclick="buttonClick(4)"><i class="far fa-clock fa-lg"></i></button>  
+        </div>
     </section>
     <footer id="footer" class="search">
         <div class="search-outer">
             <div class="search-inner">
                 <span><i class="fas fa-search fa-lg"></i></span>
-                <input 
-                id="submit"
-                type="text" 
-                aria-label="Search for city" 
-                results=2
-                autosave=2
-                placeholder="ENTER A LOCATION"
-                onchange="handleInput(this.value)" />
+                <input id="submit" type="text" aria-label="Search for city" results=2 autosave=2 placeholder="ENTER A LOCATION"
+                    onchange="handleInput(this.value)" />
             </div>
         </div>
     </footer>

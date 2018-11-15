@@ -296,38 +296,88 @@
         state: false
     };
 
+    const click = {
+        state: false
+    };
+
+    function buttonClick(id) {
+        let bool = click.state === false ? (click.state = true) : (click.state = false);
+        if (bool) {
+            switch (id) {
+                case 1:
+                    slideFaq();
+                    break;
+                case 2:
+                    slideFooter();
+                    break;
+                case 3:
+                    slideForecast();
+                    break;
+                case 4:
+                    slideHeader();
+                default:
+                    return null;
+            }
+        } else {
+            switch (id) {
+                case 1:
+                    unslideFaq();
+                    break;
+                case 2:
+                    unslideFooter();
+                    break;
+                case 3:
+                    unslideForecast();
+                    break;
+                case 4:
+                    unslideHeader();
+                default:
+                    return null;
+            }
+        }
+    }
+
     document.addEventListener("keydown", e => {
         let bool =
             keys.state === false ? (keys.state = true) : (keys.state = false);
         let key = e.keyCode;
         if (bool) {
-            if (e.keyCode === 40) {
+            if (key === 40) {
                 slideHeader();
             }
-            if (e.keyCode === 39) {
+            if (key === 39) {
                 slideFaq();
             }
-            if (e.keyCode === 37) {
+            if (key === 37) {
                 slideForecast();
             }
-            if (e.keyCode === 38) {
+            if (key === 38) {
                 slideFooter();
             }
         } else {
-            if (e.keyCode === 40) {
+            if (key === 40) {
                 unslideHeader();
             }
-            if (e.keyCode === 39) {
+            if (key === 39) {
                 unslideFaq();
             }
-            if (e.keyCode === 37) {
+            if (key === 37) {
                 unslideForecast();
             }
-            if (e.keyCode === 38) {
+            if (key === 38) {
                 unslideFooter();
             }
         }
     });
+    // for demo purposes only
+    window.setInterval(function doSomething() {
+        setInterval(dayOrNight(), 300000);
+    }, 300000);
+    // 
+
+    const isDay = {
+        state: false
+    };
 
     document.getElementById("checkbox1").addEventListener("click", dayOrNight);
     document
@@ -341,8 +391,9 @@
         const rightAside = document.getElementById("right-aside");
         const precip = document.getElementById("precip");
         const dateBtns = document.getElementById("date-btns");
-        const truthy = body.classList.contains("day");
-        if (truthy) {
+        let bool =
+            isDay.state === false ? (isDay.state = true) : (isDay.state = false);
+        if (bool) {
             header.classList.remove("blur");
             header.classList.add("blur-night");
             body.classList.remove("day");
@@ -509,9 +560,9 @@
         .get(`/getWeather/san francisco`)
         .then(response => fetchInitial(response));
 
-        const fetchInitial = (response) => {
-            currentCity.city = 'san francisco';
-            renderCity(currentCity.city);
-            onFetchWeatherResponse(response);
-        }
+    const fetchInitial = (response) => {
+        currentCity.city = 'san francisco';
+        renderCity(currentCity.city);
+        onFetchWeatherResponse(response);
+    }
 }

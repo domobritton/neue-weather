@@ -128,9 +128,9 @@
 
   module.exports = app;
 
-  // app.listen(process.env.PORT || 9000, () => {
-  //   console.log("listening on port 9000!");
-  // });
+  app.listen(process.env.PORT || 9000, () => {
+    console.log("listening on port 9000!");
+  });
 
-  app.listen(process.env.PORT || 9000);
+  // app.listen(process.env.PORT || 9000);
 }
