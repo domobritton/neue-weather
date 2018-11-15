@@ -1001,6 +1001,10 @@ a {
     margin: 0 auto;
     height: 100px;
   }
+
+  button {
+    height: 30px;
+  }
 }
 
 button {
