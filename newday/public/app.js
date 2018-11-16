@@ -1,4 +1,4 @@
-{
+
     //  For pusher logging - don't include this in production
     // Pusher.logToConsole = true;
 
@@ -159,7 +159,7 @@
         }]
     };
 
-    const storeDailyData = resp => {
+    function storeDailyData(resp) {
         let days, dailyLow, dailyHigh;
         let dayGroup = {
             0: 'Su',
@@ -226,7 +226,7 @@
         skycon.play();
     };
 
-    const renderHeaderData = resp => {
+    function renderHeaderData(resp) {
         const temp = resp.dataPoints.map(dataPoint => dataPoint.temp);
         const clouds = resp.dataPoints.map(dataPoint => dataPoint.clouds);
         const currTemp = temp[temp.length - 1];
@@ -578,4 +578,3 @@
         renderCity(currentCity.city);
         onFetchWeatherResponse(response);
     }
-}

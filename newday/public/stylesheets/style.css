@@ -951,6 +951,10 @@ a {
     width: 100vw;
   }
 
+  .left-aside-bottom {
+    padding-bottom: 100px;
+  }
+
   #header {
     height: 0;
     top: -60px;
