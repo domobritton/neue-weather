@@ -182,7 +182,7 @@
         renderDailyData(dailyConfig);
     }
 
-    const renderIcon = resp => {
+    function renderIcon(resp) {
         const icons = resp.dataPoints.map(dataPoint => dataPoint.icon);
         const icon = icons[icons.length - 1];
         const skycon = new Skycons({
@@ -497,7 +497,9 @@
 
     function onFetchWeatherResponse(response, bool = false) {
         let tempLabels, tempData, precipLabels, precipData;
-        hideEle("loading-page");
+        debugger;
+        // hideEle("loading-page");
+        document.getElementById("loading-page").style.display = "none";
         let respData = response.data;
         renderIcon(respData);
         renderHeaderData(respData);
@@ -548,6 +550,9 @@
 
     channel = pusher.subscribe("local-weather-chart");
     channel.bind("new-weather", function (data) {
+        if (data === undefined) {
+            return;
+        }
         let newWeatherData = data.dataPoint;
         if (weatherChartRef.data.labels.length > 15) {
             weatherChartRef.data.labels.shift();
