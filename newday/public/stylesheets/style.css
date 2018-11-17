@@ -52,16 +52,19 @@ body {
 
 .toggle {
   position: absolute;
-  width: 50px;
+  width: 100px;
+  height: 34px;
   top: 20px;
   right: 25px;
   z-index: 1;
 }
 
+
 .switch {
   display: inline-block;
   height: 34px;
-  position: relative;
+  position: absolute;
+  right: 0;
   width: 60px;
 }
 
@@ -915,6 +918,10 @@ a {
   .mobile-footer {
     visibility: hidden;
   }
+
+  .toggle-lower {
+    visibility: hidden;
+  }
 }
 
 @media all and (max-width: 640px) {
@@ -1013,6 +1020,15 @@ a {
   button {
     height: 30px;
   }
+
+  .toggle-lower {
+    position: absolute;
+    width: 100px;
+    height: 34px;
+    top: 60px;
+    right: 25px;
+    z-index: 1;
+  }
 }
 
 button {
@@ -1050,6 +1066,17 @@ button:focus {
   display: block;
 }
 
+#day-label, #screen-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  float: left;
+  color: #fff;
+}
+
+#screen-label {
+  margin-left: -8px;
+}
 
 @media screen and (max-width: 1024px) {
   body {

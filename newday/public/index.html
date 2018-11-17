@@ -11,6 +11,8 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="./stylesheets/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
 
 <body id="body" class="day" onload="digi()">
@@ -87,11 +89,23 @@
     <section id="precip" class="precip precip-day">
         <div id="city"></div>
         <div class="toggle">
+            <div id="day-label">
+                <p>DAY</p>
+            </div>
             <label class="switch" for="checkbox1">
                 <input type="checkbox" id="checkbox1" value="false" />
                 <div class="slider round"></div>
             </label>
         </div>
+                <!-- <div class="toggle-lower">
+                    <div id="screen-label">
+                        <p>FULL</p>
+                    </div>
+                    <label class="switch" for="checkbox4">
+                        <input type="checkbox" id="checkbox4" value="false" />
+                        <div class="slider round"></div>
+                    </label>
+                </div> -->
         <canvas id="bar-chart">
         </canvas>
         <div class="precip-title">PRECIPITATION</div>
@@ -136,7 +150,6 @@
     <script src="https://rawgithub.com/darkskyapp/skycons/master/skycons.js"></script>
     <script type="text/javascript" src="./app.js"></script>
     <script type="text/javascript" src="./clock.js"></script>
-    <!-- <script type="text/javascript" src="./icons.js"></script> -->
 </body>
 
 </html>
