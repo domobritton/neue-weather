@@ -484,6 +484,7 @@ input:checked+.slider:before {
   padding: 3%;
   background-color: snow;
   color: gray;
+  text-align: center;
 }
 
 .inner-text {
@@ -493,11 +494,7 @@ input:checked+.slider:before {
 
 .left-aside-bottom {
   position: absolute;
-  text-align: center;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding-bottom: 60px;
+  left: calc(50% - 60px);
 }
 
 .left-aside-bottom h4 {
@@ -585,20 +582,6 @@ a {
 
 .inner-text h1 {
   text-align: center;
-}
-
-.right-aside-bottom {
-  position: absolute;
-  text-align: center;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding-bottom: 60px;
-}
-
-.right-aside-bottom h4 {
-  font-size: 20px;
-  color: lightgray;
 }
 
 .night {
@@ -1050,6 +1033,24 @@ a {
     padding: 12px;
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
+  }
+
+  .temp-title {
+    top: 40px;
+  }
+  .inner-text {
+    padding-top: 20px;
+  }
+
+  .right-inner-aside {
+    height: 75%;
+  }
+
+  #city {
+    padding-top: 25px;
+  }
+  .toggle {
+    padding-top: 25px;
   }
 }
 
