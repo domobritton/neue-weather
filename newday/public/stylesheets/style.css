@@ -68,7 +68,14 @@ body {
   width: 60px;
 }
 
-.switch input {
+.switch-left {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.switch input, .switch-left input {
   display: none;
 }
 
@@ -191,11 +198,6 @@ input:checked+.slider:before {
   font-size: 70px;
   font-weight: 900;
 }
-
-/* .loader {
-  margin-left: 47%;
-  margin-top: -3%;
-} */
 
 .precip-title {
   position: absolute;
@@ -1018,7 +1020,9 @@ a {
   }
 
   button {
-    height: 30px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
   }
 
   .toggle-lower {
@@ -1028,6 +1032,10 @@ a {
     top: 60px;
     right: 25px;
     z-index: 1;
+  }
+
+  .precip-title {
+    bottom: 40px;
   }
 }
 

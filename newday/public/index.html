@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns"
         crossorigin="anonymous">
     <link rel="stylesheet" href="./stylesheets/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
@@ -53,14 +54,14 @@
             <div class="left-aside-bottom">
                 <div class="toggle-left">
                     <h4 id="temps">°F TEMP</h4>
-                    <label class="switch" for="checkbox2">
+                    <label class="switch-left" for="checkbox2">
                         <input type="checkbox" id="checkbox2" value="false" />
                         <div class="slider round"></div>
                     </label>
                 </div>
                 <div class="toggle-left">
                     <h4 id="hours">12 HOUR</h4>
-                    <label class="switch" for="checkbox3">
+                    <label class="switch-left" for="checkbox3">
                         <input type="checkbox" id="checkbox3" value="false" />
                         <div class="slider round"></div>
                     </label>
@@ -97,15 +98,6 @@
                 <div class="slider round"></div>
             </label>
         </div>
-                <!-- <div class="toggle-lower">
-                    <div id="screen-label">
-                        <p>FULL</p>
-                    </div>
-                    <label class="switch" for="checkbox4">
-                        <input type="checkbox" id="checkbox4" value="false" />
-                        <div class="slider round"></div>
-                    </label>
-                </div> -->
         <canvas id="bar-chart">
         </canvas>
         <div class="precip-title">PRECIPITATION</div>
