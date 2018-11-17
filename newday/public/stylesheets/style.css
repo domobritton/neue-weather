@@ -1029,12 +1029,6 @@ a {
   .precip-title {
     bottom: 40px;
   }
-  
-  /* body {
-    padding: 12px;
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  } */
 
   .temp-title {
     top: 30px;
@@ -1057,15 +1051,28 @@ a {
   #day-label {
     padding-top: 15px;
   }
-}
 
-/* 
-@supports(padding: min(0px)) {
-  body {
-    padding-top: max(12px, env(safe-area-inset-top));
-    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  /* .weather-data {
+    position: absolute;
+    width: 200px;
   }
-} */
+
+  .weather-data #icon {
+    width: 100px;
+    height: 100px;
+    background: red;
+    color: #fff;
+  }
+
+  .weather-data #temp {
+    margin-left: 80px;
+    margin-right: 0;
+    font-size: 20px;
+    background: red;
+    color: #fff;
+  } */
+
+}
 
 button {
   appearance: none;

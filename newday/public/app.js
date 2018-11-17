@@ -572,8 +572,8 @@ function todayClick() {
 
 channel = pusher.subscribe("local-weather-chart");
 channel.bind("new-weather", function (data) {
-    if (data === undefined) {
-        return;
+    if (!data) {
+        return null;
     }
     let newWeatherData = data.dataPoint;
     if (weatherChartRef.data.labels.length > 15) {
