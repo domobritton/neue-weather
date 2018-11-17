@@ -1006,6 +1006,10 @@ a {
     height: 100px;
   }
 
+  ::placeholder {
+    font-size: 18px;
+  }
+
   button {
     height: 30px;
   }
@@ -1044,4 +1048,11 @@ button:focus {
 
 #loader {
   display: block;
+}
+
+
+@media screen and (max-width: 1024px) {
+  body {
+    cursor: pointer;
+  } 
 }

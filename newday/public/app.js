@@ -308,46 +308,74 @@
         state: false
     };
 
-    function buttonClick(id) {
-        let bool = click.state === false ? (click.state = true) : (click.state = false);
-        if (bool) {
-            switch (id) {
-                case 1:
-                    slideFaq();
-                    break;
-                case 2:
-                    slideFooter();
-                    break;
-                case 3:
-                    slideForecast();
-                    break;
-                case 4:
-                    slideHeader();
-                default:
-                    return null;
-            }
-        } else {
-            switch (id) {
-                case 1:
-                    unslideFaq();
-                    break;
-                case 2:
-                    unslideFooter();
-                    break;
-                case 3:
-                    unslideForecast();
-                    break;
-                case 4:
-                    unslideHeader();
-                default:
-                    return null;
-            }
+    const unslideAll = (id) => {
+        switch(id) {
+            case 1:
+            unslideFooter();
+            unslideForecast();
+            unslideHeader();
+            break;
+            case 2:
+            unslideFaq();
+            unslideForecast();
+            unslideHeader();
+            break;
+            case 3:
+            unslideFaq();
+            unslideHeader();
+            unslideFooter();
+            break;
+            case 4: 
+            unslideFaq();
+            unslideForecast();
+            unslideFooter();
+            default: 
+            return null;
         }
     }
 
+    document.addEventListener("click", () => {
+        let bool = click.state === false ? (click.state = true) : (click.state = false);
+        const faq = event.target.matches(".faq");
+        const search = event.target.matches(".search");
+        const forecast = event.target.matches(".forecast");
+        const clock = event.target.matches(".clock");
+        if (bool) {
+            if (faq) {
+                slideFaq();
+                unslideAll(1);
+            }
+            if (search) {
+                slideFooter();
+                unslideAll(2);
+            }
+            if (forecast) {
+                slideForecast();
+                unslideAll(3);
+            }
+            if (clock) {
+                slideHeader();
+                unslideAll(4);
+            }
+        } else {
+            if (faq) {
+                unslideFaq();
+            }
+            if (search) {
+                unslideFooter();
+            }
+            if (forecast) {
+                unslideForecast();
+            }
+            if (clock) {
+                unslideHeader();
+            }
+        }
+
+    }, false);
+
     document.addEventListener("keydown", e => {
-        let bool =
-            keys.state === false ? (keys.state = true) : (keys.state = false);
+        let bool = click.state === false ? (click.state = true) : (click.state = false);
         let key = e.keyCode;
         if (bool) {
             if (key === 40) {
@@ -376,7 +404,8 @@
                 unslideFooter();
             }
         }
-    });
+    }, false);
+
     // for demo purposes only
     window.setInterval(function doSomething() {
         setInterval(dayOrNight(), 300000);
@@ -497,9 +526,7 @@
 
     function onFetchWeatherResponse(response, bool = false) {
         let tempLabels, tempData, precipLabels, precipData;
-        debugger;
-        // hideEle("loading-page");
-        document.getElementById("loading-page").style.display = "none";
+        hideEle("loading-page");
         let respData = response.data;
         renderIcon(respData);
         renderHeaderData(respData);
