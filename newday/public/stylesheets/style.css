@@ -956,6 +956,7 @@ a {
 
   #header {
     height: 0;
+    padding-top: 40px;
     top: -60px;
   }
 
@@ -1029,14 +1030,14 @@ a {
     bottom: 40px;
   }
   
-  body {
+  /* body {
     padding: 12px;
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
-  }
+  } */
 
   .temp-title {
-    top: 40px;
+    top: 30px;
   }
   .inner-text {
     padding-top: 20px;
@@ -1051,6 +1052,10 @@ a {
   }
   .toggle {
     padding-top: 25px;
+  }
+
+  #day-label {
+    padding-top: 15px;
   }
 }
 
